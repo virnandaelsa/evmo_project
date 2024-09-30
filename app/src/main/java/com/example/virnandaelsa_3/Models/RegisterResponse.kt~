@@ -1,0 +1,6 @@
+package com.example.virnandaelsa_3.Models
+
+class RegisterResponse ()
+    val status: Boolean? = null
+    val message: String? = null
+}
