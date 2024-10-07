@@ -103,4 +103,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu_bottom" />
 
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="#385A7F"
+        android:text="Log Out"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
