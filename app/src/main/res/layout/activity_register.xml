@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF">
 
     <ImageView
         android:id="@+id/imageView"
@@ -25,6 +27,9 @@
         android:layout_marginStart="55dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="55dp"
+        android:textColorHint="#00000F"
+        app:boxBackgroundColor="#FFFFFF"
+        app:boxStrokeColor="#00000F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView">
@@ -43,6 +48,8 @@
         android:layout_marginStart="55dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="55dp"
+        android:textColorHint="#00000F"
+        app:boxStrokeColor="#00000F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
@@ -51,7 +58,8 @@
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email" />
+            android:hint="Email"
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -61,6 +69,8 @@
         android:layout_marginStart="55dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="55dp"
+        android:textColorHint="#00000F"
+        app:boxStrokeColor="#00000F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
@@ -79,6 +89,8 @@
         android:layout_marginStart="55dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="55dp"
+        android:textColorHint="#00000F"
+        app:boxStrokeColor="#00000F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
@@ -97,6 +109,8 @@
         android:layout_marginStart="55dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="55dp"
+        android:textColorHint="#00000F"
+        app:boxStrokeColor="#00000F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
@@ -115,6 +129,8 @@
         android:layout_marginStart="55dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="55dp"
+        android:textColorHint="#00000F"
+        app:boxStrokeColor="#00000F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
@@ -123,7 +139,8 @@
             android:id="@+id/edtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password" />
+            android:hint="Password"
+            android:inputType="text|textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

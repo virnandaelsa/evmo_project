@@ -6,6 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.registrasi)
+        setContentView(R.layout.frag_profile)
     }
 }

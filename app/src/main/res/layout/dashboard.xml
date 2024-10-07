@@ -88,4 +88,31 @@
         app:layout_constraintStart_toEndOf="@+id/txToko"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="410dp"
+        android:layout_height="60dp"
+        android:background="@color/material_dynamic_primary40"
+        app:backgroundTint="#385A7F"
+        app:elevation="10dp"
+        app:itemBackground="@null"
+        app:itemIconSize="35dp"
+        app:itemIconTint="@color/white"
+        app:labelVisibilityMode="selected"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu_bottom" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="#385A7F"
+        android:text="Log Out"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
