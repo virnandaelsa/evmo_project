@@ -88,4 +88,19 @@
         app:layout_constraintStart_toEndOf="@+id/txToko"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="410dp"
+        android:layout_height="60dp"
+        android:background="@color/material_dynamic_primary40"
+        app:backgroundTint="#385A7F"
+        app:elevation="10dp"
+        app:itemBackground="@null"
+        app:itemIconSize="35dp"
+        app:itemIconTint="@color/white"
+        app:labelVisibilityMode="selected"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu_bottom" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
