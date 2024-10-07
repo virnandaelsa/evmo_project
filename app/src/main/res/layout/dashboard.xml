@@ -10,9 +10,10 @@
         android:layout_width="130dp"
         android:layout_height="70dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/wisma"
         tools:srcCompat="@drawable/wisma" />
 
     <TextView
@@ -20,19 +21,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:text="Untuk Anda"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="87dp" />
+        app:layout_constraintTop_toBottomOf="@id/imageView2" />
 
     <ImageView
         android:id="@+id/imgProduk"
-        android:layout_width="135dp"
-        android:layout_height="95dp"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="126dp"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:srcCompat="@color/design_default_color_primary"
         tools:srcCompat="@android:color/holo_purple" />
 
     <TextView
@@ -43,8 +47,8 @@
         android:text="Siger Sunda"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imgProduk"
-        tools:layout_editor_absoluteY="127dp" />
+        app:layout_constraintStart_toEndOf="@id/imgProduk"
+        app:layout_constraintTop_toTopOf="@id/imgProduk" />
 
     <TextView
         android:id="@+id/txHarga"
@@ -54,40 +58,34 @@
         android:layout_marginTop="10dp"
         android:text="Rp. 5.000.000,00"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/imgProduk"
-        app:layout_constraintTop_toBottomOf="@+id/txProduk" />
+        app:layout_constraintStart_toEndOf="@id/imgProduk"
+        app:layout_constraintTop_toBottomOf="@id/txProduk" />
 
     <TextView
         android:id="@+id/txToko"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="10dp"
         android:text="SeMUA Evelyn"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/imgProduk"
-        app:layout_constraintTop_toBottomOf="@+id/txHarga" />
+        app:layout_constraintStart_toEndOf="@id/imgProduk"
+        app:layout_constraintTop_toBottomOf="@id/txHarga" />
 
     <Button
         android:id="@+id/btnPesan"
         android:layout_width="95dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="215dp"
+        android:layout_marginEnd="30dp"
         android:backgroundTint="#385A7F"
         android:text="Pesan"
+        android:textAlignment="center"
         android:textSize="14sp"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="181dp" />
+        app:layout_constraintStart_toEndOf="@+id/txToko"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="420dp"
-        android:layout_height="60dp"
-        android:textAlignment="center"
-        app:itemBackground="@color/material_dynamic_primary40"
-        app:itemIconTint="@color/white"
-        app:labelVisibilityMode="selected"
-        app:menu="@menu/menu_bottom"
-        tools:layout_editor_absoluteX="-5dp"
-        tools:layout_editor_absoluteY="678dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
