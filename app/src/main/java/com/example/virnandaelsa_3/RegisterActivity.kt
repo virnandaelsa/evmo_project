@@ -1,6 +1,8 @@
 package com.example.virnandaelsa_3
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.virnandaelsa_3.Models.RegisterRequest
@@ -80,9 +82,9 @@ class RegisterActivity: AppCompatActivity() {
                 if (response.isSuccessful){
                     val registerResponse = response.body()
                     if (registerResponse != null && registerResponse.status){
-                        Toast.makeText(this@RegisterActivity, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
+                        Log.d("RegisterActivity", "Registrasi berhasil")
                     } else {
-                        Toast.makeText(this@RegisterActivity, registerResponse?.message ?: "Registrasi Gagal", Toast.LENGTH_SHORT).show()
+                        Log.d("RegisterActivity", "Registrasi gagal")
                     }
                 } else {
                     val errorBody = response.errorBody()?.string()
@@ -129,7 +131,10 @@ class RegisterActivity: AppCompatActivity() {
                         "username" to username
                     )
                     db.collection("users").document(it).set(user).addOnSuccessListener {
-                        //Ini nanti redirect ke halaman login
+                        Toast.makeText(this@RegisterActivity, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     }.addOnFailureListener {
                         Toast.makeText(this, "Registrasi Gagal", Toast.LENGTH_SHORT).show()
                     }
