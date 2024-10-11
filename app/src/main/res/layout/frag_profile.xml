@@ -7,13 +7,13 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="135dp"
-        android:layout_height="70dp"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo"
+        app:srcCompat="@drawable/wisma"
         tools:src="@drawable/wisma"
         tools:srcCompat="@drawable/wisma" />
 
@@ -21,8 +21,8 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="30dp"
         android:text="Profile Saya"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -30,11 +30,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/ImgProf"
         android:layout_width="100dp"
         android:layout_height="90dp"
         android:layout_marginStart="155dp"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="110dp"
         android:layout_marginEnd="156dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,25 +43,25 @@
         tools:srcCompat="@color/design_default_color_primary_variant" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txNameProf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="180dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="180dp"
         android:text="savira"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/ImgProf" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="39dp"
-        android:layout_marginTop="185dp"
+        android:layout_marginTop="195dp"
         android:text="Nama"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -69,13 +69,14 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/txName"
         android:layout_width="320dp"
-        android:layout_height="42dp"
+        android:layout_height="35dp"
         android:layout_marginStart="39dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="39dp"
         android:ems="10"
+        android:hint="nama"
         android:inputType="text"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,16 +93,17 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintTop_toBottomOf="@+id/txName" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/txTelepon"
         android:layout_width="320dp"
-        android:layout_height="42dp"
+        android:layout_height="35dp"
         android:layout_marginStart="39dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="39dp"
         android:ems="10"
+        android:hint="nomor telepon"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -117,16 +119,17 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+        app:layout_constraintTop_toBottomOf="@+id/txTelepon" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/txEmail"
         android:layout_width="320dp"
-        android:layout_height="42dp"
+        android:layout_height="35dp"
         android:layout_marginStart="39dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="39dp"
         android:ems="10"
+        android:hint="email"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -142,32 +145,34 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+        app:layout_constraintTop_toBottomOf="@+id/txEmail" />
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/txAlamatProf"
         android:layout_width="320dp"
-        android:layout_height="42dp"
+        android:layout_height="35dp"
         android:layout_marginStart="39dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="39dp"
         android:ems="10"
+        android:hint="alamat"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnSimpan1"
         android:layout_width="280dp"
         android:layout_height="45dp"
         android:layout_marginStart="56dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="57dp"
         android:backgroundTint="#385A7F"
-        android:text="UBAH PROFILE"
+        android:text="SIMPAN"
+        android:textStyle="bold"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
+        app:layout_constraintTop_toBottomOf="@+id/txAlamatProf" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:text="Tanggal / Jam"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgProduk2" />
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="158dp"
+        android:layout_marginTop="128dp"
         android:text="Siger Sunda"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -56,34 +56,25 @@
         android:layout_width="120dp"
         android:layout_height="90dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:layout_constraintTop_toBottomOf="@+id/btnKembali2"
+        app:srcCompat="@color/design_default_color_primary"
         tools:srcCompat="@color/design_default_color_primary" />
 
     <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        tools:srcCompat="@drawable/back" />
-
-    <ImageView
         android:id="@+id/imageView2"
-        tools:srcCompat="@drawable/wisma"
-        android:layout_width="130dp"
-        android:layout_height="70dp"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/wisma" />
+        app:srcCompat="@drawable/wisma"
+        tools:srcCompat="@drawable/wisma" />
 
     <TextView
-        android:id="@+id/textView28"
+        android:id="@+id/txTanggal2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -100,13 +91,13 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:text="Keterangan"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+        app:layout_constraintTop_toBottomOf="@+id/txTanggal2" />
 
     <TextView
-        android:id="@+id/textView30"
+        android:id="@+id/txKet2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -123,13 +114,13 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:text="Alamat"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+        app:layout_constraintTop_toBottomOf="@+id/txKet2" />
 
     <TextView
-        android:id="@+id/textView32"
+        android:id="@+id/txAlamat2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -146,22 +137,21 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:text="Pembayaran"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView32" />
+        app:layout_constraintTop_toBottomOf="@+id/txAlamat2" />
 
     <TextView
         android:id="@+id/textView24"
-        android:layout_width="351dp"
+        android:layout_width="320dp"
         android:layout_height="40dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="40dp"
         android:text="* Silahkan melakukan pembayaran DP apabila pesanan telah dikonfirmasi"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
@@ -192,29 +182,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:text="Bukti DP"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/imgDP"
         android:layout_width="120dp"
         android:layout_height="60dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView37"
+        app:srcCompat="@color/material_dynamic_neutral70"
         tools:srcCompat="@color/material_dynamic_neutral70" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/btnKirim"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="110dp"
         android:layout_marginEnd="100dp"
         android:backgroundTint="#385A7F"
         android:text="Kirim"
@@ -227,12 +218,25 @@
         android:id="@+id/textView38"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="20dp"
         android:text="Upload DP"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnKembali2"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#FDF6FE"
+        app:icon="@drawable/back"
+        app:iconSize="35dp"
+        app:iconTint="#566F89"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
