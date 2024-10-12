@@ -3,7 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+=======
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+>>>>>>> ec5453ed16b12f29d84ceaed0e8b2477f8cc36b3
 
     <application
         android:allowBackup="true"
@@ -23,9 +28,11 @@
         <activity
             android:name=".MyApplication"
             android:exported="false" />
+        <activity android:name=".Profile" />
         <activity
             android:name=".DashboardActivity"
             android:exported="true">
+<<<<<<< HEAD
 
         </activity>
         <activity
@@ -34,6 +41,8 @@
         <activity
             android:name=".lihat_jasa"
             android:exported="true">
+=======
+>>>>>>> ec5453ed16b12f29d84ceaed0e8b2477f8cc36b3
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,10 +50,15 @@
             </intent-filter>
         </activity>
         <activity
+<<<<<<< HEAD
             android:name=".tambah_transaksi"
             android:exported="true">
         </activity>
 
+=======
+            android:name=".RegisterActivity"
+            android:exported="false"/>
+>>>>>>> ec5453ed16b12f29d84ceaed0e8b2477f8cc36b3
     </application>
 
 </manifest>

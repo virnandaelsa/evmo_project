@@ -62,4 +62,17 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+<<<<<<< HEAD
 }
+=======
+    implementation("com.squareup.picasso:picasso:2.8")
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+    implementation ("com.google.android.material:material:1.8.0")
+
+    // Navigasi
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.5.3") // Versi terbaru
+    implementation ("androidx.navigation:navigation-ui-ktx:2.5.3") // Versi terbaru
+
+}
+>>>>>>> ec5453ed16b12f29d84ceaed0e8b2477f8cc36b3
