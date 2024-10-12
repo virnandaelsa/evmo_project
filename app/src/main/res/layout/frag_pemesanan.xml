@@ -18,8 +18,8 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="130dp"
-        android:layout_height="70dp"
+        android:layout_width="105dp"
+        android:layout_height="49dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="25dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,8 +29,8 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="80dp"
-        android:layout_height="40dp"
+        android:layout_width="65dp"
+        android:layout_height="24dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,8 +51,8 @@
         android:id="@+id/txProduk2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="158dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="113dp"
         android:text="Siger Sunda"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -84,8 +84,8 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout9"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
+        android:layout_width="354dp"
+        android:layout_height="59dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
@@ -96,8 +96,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edTanggal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="hint" />
+            android:layout_height="50dp"
+            android:hint="Tanggal / Jam"
+            android:inputType="datetime" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -115,7 +116,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout10"
         android:layout_width="350dp"
-        android:layout_height="50dp"
+        android:layout_height="68dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
@@ -126,8 +127,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edKet"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="hint" />
+            android:layout_height="58dp"
+            android:hint="Keterangan" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -144,8 +145,8 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout11"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
+        android:layout_width="351dp"
+        android:layout_height="59dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
@@ -156,8 +157,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edAlamat"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="hint" />
+            android:layout_height="50dp"
+            android:hint="Alamat" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView

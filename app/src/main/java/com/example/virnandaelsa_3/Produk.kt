@@ -4,9 +4,9 @@ data class Produk(
     var alamat: String? = "",
     var harga: Int? = 0,
     var pembayaran: String? = "",
-    var judul: String? = "",
+    var nama: String? = "",
     var keterangan: String? = "",
-    var pj: String? = "",
+    var toko: String? = "",
     var tanggal: String? = "",
-    var foto: String? = "" // Tambahkan atribut untuk URL foto
+    var imageUrl: String? = "" // Tambahkan atribut untuk URL foto
 )

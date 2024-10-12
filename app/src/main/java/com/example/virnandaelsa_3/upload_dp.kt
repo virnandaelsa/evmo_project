@@ -1,135 +1,132 @@
 package com.example.virnandaelsa_3
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.virnandaelsa_3.databinding.ActivityUploadDpBinding
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.virnandaelsa_3.databinding.FragDpBinding
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class upload_dp : AppCompatActivity() {
-    private lateinit var binding: ActivityUploadDpBinding
-    private lateinit var storageRef: StorageReference
+
+    private lateinit var binding: FragDpBinding
     private var selectedImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Inisialisasi binding dan Firebase
-        binding = ActivityUploadDpBinding.inflate(layoutInflater)
+        binding = FragDpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inisialisasi Firebase
-        val db = FirebaseFirestore.getInstance()
-        storageRef = FirebaseStorage.getInstance().reference
+        // Ambil data dari intent
+        val serviceId = intent.getStringExtra("SERVICE_ID")
+        val productTitle = intent.getStringExtra("PRODUCT_TITLE")
+        val productPrice = intent.getStringExtra("PRODUCT_PRICE")
+        val productOwner = intent.getStringExtra("PRODUCT_OWNER")
+        val productImageUri = intent.getStringExtra("PRODUCT_IMAGE_URI")
+        val tanggal = intent.getStringExtra("TANGGAL")
+        val keterangan = intent.getStringExtra("KETERANGAN")
+        val alamat = intent.getStringExtra("ALAMAT")
 
-        // Mendapatkan referensi dokumen di Firestore
-        val docRef = db.collection("EVMO").document("123")
+        // Menampilkan data produk ke UI
+        binding.txProduk2.text = productTitle
+        binding.txHarga2.text = productPrice
+        binding.txToko1.text = productOwner
+        binding.txtgl.text = tanggal // Menampilkan tanggal di TextView
+        binding.txket.text = keterangan // Menampilkan keterangan di TextView
+        binding.txalamat.text = alamat // Menampilkan alamat di TextView
 
-        // Mengambil data dari database
-        docRef.get().addOnSuccessListener { documentSnapshot: DocumentSnapshot ->
-            if (documentSnapshot.exists()) {
-                // Ambil data dari Firestore
-                populateFields(documentSnapshot)
-            } else {
-                Toast.makeText(this, "Document does not exist", Toast.LENGTH_SHORT).show()
-            }
-        }.addOnFailureListener { e ->
-            Toast.makeText(this, "Error fetching data: ${e.message}", Toast.LENGTH_SHORT).show()
+        productImageUri?.let {
+            Glide.with(this)
+                .load(it) // URL gambar
+                .into(binding.imgProduk2) // ImageView untuk menampilkan gambar
         }
 
-        // Tombol untuk memilih gambar
-        binding.imageButton.setOnClickListener {
-            openGallery()
+        // Fungsi untuk memilih gambar DP menggunakan ImageButton
+        binding.imgbtn.setOnClickListener {
+            selectImageFromGallery()
         }
 
-        // Tombol untuk mengupload gambar
-        binding.btnUploadPayment.setOnClickListener {
-            if (selectedImageUri != null) {
-                uploadImage(selectedImageUri!!)
+        // Tombol untuk mengupload bukti DP
+        binding.button7.setOnClickListener {
+            if (serviceId != null) {
+                uploadImage(serviceId)
             } else {
-                Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "ID Layanan tidak tersedia", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun populateFields(documentSnapshot: DocumentSnapshot) {
-        val alamat = documentSnapshot.getString("alamat")
-        val harga = documentSnapshot.getString("harga") ?: "0"
-        val pembayaran = documentSnapshot.getString("pembayaran")
-        val fotoUrl = documentSnapshot.getString("foto")
-        val judul = documentSnapshot.getString("judul")
-        val keterangan = documentSnapshot.getString("keterangan")
-        val pj = documentSnapshot.getString("toko")
+    private fun uploadImage(serviceId: String) {
+        selectedImageUri?.let { uri ->
+            val storageReference: StorageReference = FirebaseStorage.getInstance().reference
+                .child("dp/${serviceId}_${System.currentTimeMillis()}.${getFileExtension(uri)}")
 
-        // Ambil 'tanggal' sebagai Timestamp
-        val timestamp = documentSnapshot.getTimestamp("tanggal")
-        val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault())
-        val tanggal = timestamp?.let { sdf.format(it.toDate()) }
-
-        // Mengisi data ke dalam TextView
-        binding.txJudul.text = judul
-        binding.txHarga.text = "Rp $harga"
-        binding.txToko.text = pj
-        binding.txTanggal.text = tanggal
-        binding.txKet.text = keterangan
-        binding.txAlamat.text = alamat
-        binding.txBayar.text = "Silahkan melakukan pembayaran ke rekening $pembayaran"
-        binding.txRekening.text = pembayaran
-
-        // Menggunakan Glide untuk menampilkan gambar dari URL
-        Glide.with(this).load(fotoUrl).into(binding.imageView2)
+            storageReference.putFile(uri)
+                .addOnSuccessListener {
+                    storageReference.downloadUrl.addOnSuccessListener { downloadUri ->
+                        // Setelah berhasil upload, simpan ke Firebase Realtime Database
+                        saveDataToRealtimeDatabase(serviceId, downloadUri.toString())
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Gagal mengupload bukti DP: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        } ?: run {
+            Toast.makeText(this, "Silakan pilih gambar untuk diupload", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, 100)
+    private fun saveDataToRealtimeDatabase(serviceId: String, imageUrl: String) {
+        val databaseReference = FirebaseDatabase.getInstance().getReference("uploads")
+        val uploadId = databaseReference.push().key
+
+        val uploadData = UploadData(serviceId, imageUrl)
+        uploadId?.let {
+            databaseReference.child(it).setValue(uploadData)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show()
+                    // Reset image view setelah upload berhasil
+                    binding.imgbtn.setImageURI(null) // Ganti ini dengan default image jika perlu
+                    selectedImageUri = null
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Gagal menyimpan data: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    private fun selectImageFromGallery() {
+        val intent = Intent().apply {
+            type = "image/*"
+            action = Intent.ACTION_GET_CONTENT
+        }
+        startActivityForResult(Intent.createChooser(intent, "Pilih Gambar"), PICK_IMAGE_REQUEST)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 100 && resultCode == RESULT_OK) {
-            selectedImageUri = data?.data
-            if (selectedImageUri != null) {
-                Glide.with(this).load(selectedImageUri).into(binding.imageViewbukti)
-            } else {
-                Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
-            }
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+            selectedImageUri = data.data
+            // Menampilkan gambar yang dipilih pada ImageButton
+            binding.imgbtn.setImageURI(selectedImageUri) // Anda dapat mengganti ini dengan cara lain untuk menunjukkan gambar
         }
     }
 
-    private fun uploadImage(imageUri: Uri) {
-        val imageRef = storageRef.child("uploads/${System.currentTimeMillis()}.jpg")
-        imageRef.putFile(imageUri)
-            .addOnSuccessListener {
-                imageRef.downloadUrl.addOnSuccessListener { uri ->
-                    saveImageUrlToFirestore(uri.toString())
-                }.addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to get download URL: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-            }.addOnFailureListener { e ->
-                Toast.makeText(this, "Image upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+    private fun getFileExtension(uri: Uri): String {
+        return uri.toString().substringAfterLast(".")
     }
 
-    private fun saveImageUrlToFirestore(imageUrl: String) {
-        val db = FirebaseFirestore.getInstance()
-        val docRef = db.collection("EVMO").document("123")
-
-        docRef.update("bukti_dp", imageUrl)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Image URL saved successfully", Toast.LENGTH_SHORT).show()
-                Glide.with(this).load(imageUrl).into(binding.imageViewbukti) // Update image view
-            }.addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to save image URL: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+    companion object {
+        private const val PICK_IMAGE_REQUEST = 1
     }
+
+    data class UploadData(
+        val serviceId: String,
+        val imageUrl: String
+    )
 }

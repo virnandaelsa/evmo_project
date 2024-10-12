@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".upload_dp">
+    tools:context=".tambah_transaksi">
 
     <ImageView
         android:id="@+id/logo"
@@ -208,7 +208,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txRekening" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/imgbtn"
         android:layout_width="120dp"
         android:layout_height="80dp"
         android:layout_marginStart="30dp"
@@ -225,7 +225,7 @@
         android:text="Upload Payment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/imgbtn" />
 
     <ImageView
         android:id="@+id/imageViewbukti"
@@ -235,6 +235,6 @@
         android:layout_marginBottom="15dp"
         android:background="#B8B5B5"
         app:layout_constraintBottom_toTopOf="@+id/btnUploadPayment"
-        app:layout_constraintStart_toEndOf="@+id/imageButton" />
+        app:layout_constraintStart_toEndOf="@+id/imgbtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

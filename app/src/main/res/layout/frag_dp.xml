@@ -5,6 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageButton
+        android:id="@+id/imgbtn"
+        android:layout_width="118dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="11dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView37"
+        tools:srcCompat="@color/material_dynamic_neutral60" />
+
     <TextView
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
@@ -83,7 +93,7 @@
         app:srcCompat="@drawable/wisma" />
 
     <TextView
-        android:id="@+id/textView28"
+        android:id="@+id/txtgl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -103,10 +113,10 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+        app:layout_constraintTop_toBottomOf="@+id/txtgl" />
 
     <TextView
-        android:id="@+id/textView30"
+        android:id="@+id/txket"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -126,10 +136,10 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+        app:layout_constraintTop_toBottomOf="@+id/txket" />
 
     <TextView
-        android:id="@+id/textView32"
+        android:id="@+id/txalamat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -149,7 +159,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView32" />
+        app:layout_constraintTop_toBottomOf="@+id/txalamat" />
 
     <TextView
         android:id="@+id/textView24"
@@ -200,13 +210,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/foto_dp"
         android:layout_width="120dp"
         android:layout_height="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView37"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toEndOf="@+id/imgbtn"
+        app:layout_constraintTop_toBottomOf="@+id/textView36"
         tools:srcCompat="@color/material_dynamic_neutral70" />
 
     <Button
