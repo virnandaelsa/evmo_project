@@ -13,7 +13,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
 
     // Deklarasi binding
     lateinit var binding: DashboardBinding
-    lateinit var fragProfile: fragProfile
+    lateinit var edProfile: EdProfile
     lateinit var fragPesanan: fragPesanan
     lateinit var ft : FragmentTransaction
 
@@ -28,7 +28,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         binding.bnv1.setOnNavigationItemSelectedListener(this)
 
         // Inisialisasi fragment
-        fragProfile = fragProfile()
+        edProfile = EdProfile()
         fragPesanan = fragPesanan()
     }
 
@@ -43,7 +43,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
             }
             R.id.itemUser -> {
                 ft = supportFragmentManager.beginTransaction()
-                ft.replace(R.id.fragmentLayout, fragProfile).commit()
+                ft.replace(R.id.fragmentLayout, edProfile).commit()
                 binding.fragmentLayout.setBackgroundColor(Color.argb(245, 255, 255, 255)) // Gunakan android.graphics.Color
                 binding.fragmentLayout.visibility = View.VISIBLE
             }

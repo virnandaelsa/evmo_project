@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
+
     <Button
-        android:id="@+id/btnSimpan1"
+        android:id="@+id/btnUpdate"
         android:layout_width="280dp"
         android:layout_height="45dp"
         android:layout_marginStart="65dp"
@@ -103,7 +104,7 @@
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSimpan1" />
+        app:layout_constraintTop_toBottomOf="@+id/btnUpdate" />
 
     <ImageView
         android:id="@+id/imageView4"
