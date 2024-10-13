@@ -19,8 +19,8 @@
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
         android:text="Tanggal / Jam"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imgProduk2" />
 
     <TextView
-        android:id="@+id/txToko1"
+        android:id="@+id/txToko2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -84,95 +84,36 @@
         tools:srcCompat="@drawable/wisma" />
 
     <TextView
-<<<<<<< HEAD
-        android:id="@+id/txtgl"
-=======
-        android:id="@+id/txTanggal2"
->>>>>>> ec5453ed16b12f29d84ceaed0e8b2477f8cc36b3
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:text="12/12/2024 10.00 AM"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
-
-    <TextView
         android:id="@+id/textView29"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="28dp"
         android:text="Keterangan"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD
-        app:layout_constraintTop_toBottomOf="@+id/txtgl" />
-
-    <TextView
-        android:id="@+id/txket"
-=======
-        app:layout_constraintTop_toBottomOf="@+id/txTanggal2" />
-
-    <TextView
-        android:id="@+id/txKet2"
->>>>>>> ec5453ed16b12f29d84ceaed0e8b2477f8cc36b3
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:text="Tolong segera dikonfirmasi"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView29" />
+        tools:layout_editor_absoluteY="322dp" />
 
     <TextView
         android:id="@+id/textView31"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="28dp"
         android:text="Alamat"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD
-        app:layout_constraintTop_toBottomOf="@+id/txket" />
-
-    <TextView
-        android:id="@+id/txalamat"
-=======
-        app:layout_constraintTop_toBottomOf="@+id/txKet2" />
-
-    <TextView
-        android:id="@+id/txAlamat2"
->>>>>>> ec5453ed16b12f29d84ceaed0e8b2477f8cc36b3
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:text="Kediri, Jalan Kenanga Nomor 256"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView31" />
+        />
 
     <TextView
         android:id="@+id/textView33"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="28dp"
         android:text="Pembayaran"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD
-        app:layout_constraintTop_toBottomOf="@+id/txalamat" />
-=======
-        app:layout_constraintTop_toBottomOf="@+id/txAlamat2" />
->>>>>>> ec5453ed16b12f29d84ceaed0e8b2477f8cc36b3
+        tools:layout_editor_absoluteY="468dp" />
 
     <TextView
         android:id="@+id/textView24"
@@ -181,9 +122,10 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="40dp"
-        android:text="* Silahkan melakukan pembayaran DP apabila pesanan telah dikonfirmasi"
+        android:text="* Silahkan melakukan pembayaran DP"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
@@ -220,27 +162,6 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView35" />
-
-    <ImageView
-<<<<<<< HEAD
-        android:id="@+id/foto_dp"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintStart_toEndOf="@+id/imgbtn"
-        app:layout_constraintTop_toBottomOf="@+id/textView36"
-=======
-        android:id="@+id/imgDP"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView37"
-        app:srcCompat="@color/material_dynamic_neutral70"
->>>>>>> ec5453ed16b12f29d84ceaed0e8b2477f8cc36b3
-        tools:srcCompat="@color/material_dynamic_neutral70" />
 
     <Button
         android:id="@+id/btnKirim"
@@ -280,5 +201,46 @@
         app:iconTint="#566F89"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alamat"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="396dp" />
+
+    <TextView
+        android:id="@+id/txTgl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="33dp"
+        tools:layout_editor_absoluteY="285dp" />
+
+    <TextView
+        android:id="@+id/txket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="360dp" />
+
+    <TextView
+        android:id="@+id/txalamat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="437dp" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="113dp"
+        android:layout_height="55dp"
+        tools:layout_editor_absoluteX="170dp"
+        tools:layout_editor_absoluteY="605dp"
+        tools:srcCompat="@android:drawable/alert_dark_frame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

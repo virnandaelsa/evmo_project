@@ -15,6 +15,9 @@ class tambah_transaksi : AppCompatActivity() {
 
     private lateinit var binding: FragPemesananBinding
     private var selectedImageUri: Uri? = null
+    private lateinit var tanggal: String
+    private lateinit var keterangan: String
+    private lateinit var alamat: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,37 +27,32 @@ class tambah_transaksi : AppCompatActivity() {
         // Ambil data dari intent
         val serviceId = intent.getStringExtra("SERVICE_ID")
         val productTitle = intent.getStringExtra("PRODUCT_TITLE")
-        val productPrice = intent.getStringExtra("PRODUCT_PRICE")
+        val productPrice = intent.getIntExtra("PRODUCT_PRICE", 0).toString() // Ubah menjadi String
         val productOwner = intent.getStringExtra("PRODUCT_OWNER")
         val productImageUri = intent.getStringExtra("PRODUCT_IMAGE_URI")
 
         // Menampilkan data produk ke UI
-        binding.txProduk2.text = productTitle
-        binding.txHarga2.text = productPrice
-        binding.txToko1.text = productOwner
+        binding.txProduk4.text = productTitle
+        binding.txHarga4.text = productPrice
+        binding.txToko4.text = productOwner
 
         productImageUri?.let {
             Glide.with(this)
                 .load(it) // URL gambar
-                .into(binding.imgProduk2) // ImageView untuk menampilkan gambar
+                .into(binding.imgProduk4) // ImageView untuk menampilkan gambar
         }
 
         // Tombol untuk menambah transaksi
         binding.btnPesanan.setOnClickListener {
-            uploadData(serviceId, productTitle, productPrice, productOwner, productImageUri)
-        }
-
-        // Fungsi pemilihan gambar
-        binding.imageView6.setOnClickListener {
-            selectImageFromGallery()
+            uploadData(serviceId, productTitle, productPrice, productOwner)
         }
     }
 
-    private fun uploadData(serviceId: String?, productTitle: String?, productPrice: String?, productOwner: String?, productImageUri: String?) {
+    private fun uploadData(serviceId: String?, productTitle: String?, productPrice: String?, productOwner: String?) {
         // Ambil input dari TextInputEditText
-        val tanggal = binding.edTanggal.text.toString()
-        val keterangan = binding.edKet.text.toString()
-        val alamat = binding.edAlamat.text.toString()
+        val tanggal = binding.edTanggalInput.text.toString()
+        val keterangan = binding.edKeteranganInput.text.toString()
+        val alamat = binding.edAlamatInput.text.toString()
 
         // Validasi input
         if (tanggal.isEmpty() || keterangan.isEmpty() || alamat.isEmpty()) {
@@ -62,62 +60,46 @@ class tambah_transaksi : AppCompatActivity() {
             return
         }
 
+        // Konversi harga dari String ke Int
+        val harga = productPrice?.toIntOrNull() ?: 0 // Ubah harga ke Int, jika tidak ada set 0
+
+        // Membuat objek Jasa yang akan disimpan
+        val jasa = Jasa(
+            id = serviceId ?: "", // ID Jasa
+            tanggal = tanggal,
+            keterangan = keterangan,
+            alamat = alamat,
+            judul = productTitle ?: "",
+            harga = harga, // Pastikan ini adalah Int
+            toko = productOwner ?: "",
+            imageUrl = selectedImageUri.toString() // Jika ada gambar
+        )
+
         // Simpan ke Firebase Realtime Database
         val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("EVMO")
 
-        // Membuat objek data yang akan disimpan
-        val data = hashMapOf(
-            "tanggal" to tanggal,
-            "keterangan" to keterangan,
-            "alamat" to alamat,
-            "serviceId" to (serviceId ?: ""),
-            "productTitle" to (productTitle ?: ""),
-            "productPrice" to (productPrice ?: ""),
-            "productOwner" to (productOwner ?: ""),
-            "productImageUri" to (productImageUri ?: "")
-        )
-
-        // Menyimpan data ke Realtime Database
-        serviceId?.let {
-            database.child(it).setValue(data)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show()
-                    navigateToUploadDP(serviceId, productTitle, productPrice, productOwner, productImageUri)
-                }.addOnFailureListener { e ->
-                    Toast.makeText(this, "Gagal menyimpan data: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-        } ?: run {
-            Toast.makeText(this, "ID Jasa tidak valid", Toast.LENGTH_SHORT).show()
-        }
+        // Menyimpan data ke Realtime Database dengan ID yang sesuai
+        database.child(serviceId ?: "").setValue(jasa)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show()
+                // Panggil fungsi untuk navigasi setelah penyimpanan berhasil
+                navigateToUploadDP(serviceId, productTitle, productPrice, productOwner, tanggal, keterangan, alamat)
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Gagal menyimpan data: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
-
-    private fun navigateToUploadDP(serviceId: String?, productTitle: String?, productPrice: String?, productOwner: String?, productImageUri: String?) {
-        val intent = Intent(this, tambah_transaksi::class.java).apply {
-            putExtra("SERVICE_ID", serviceId)
-            putExtra("PRODUCT_TITLE", productTitle)
-            putExtra("PRODUCT_PRICE", productPrice)
-            putExtra("PRODUCT_OWNER", productOwner)
-            putExtra("PRODUCT_IMAGE_URI", productImageUri)
-        }
+    // Setelah menyimpan data, navigasi ke halaman upload DP
+    private fun navigateToUploadDP(serviceId: String?, productTitle: String?, productPrice: String?, productOwner: String?, tanggal: String, keterangan: String, alamat: String) {
+        // Halaman tambah transaksi
+        val intent = Intent(this, upload_dp::class.java)
+        intent.putExtra("SERVICE_ID", serviceId)
+        intent.putExtra("PRODUCT_TITLE", productTitle)
+        intent.putExtra("PRODUCT_PRICE", productPrice)
+        intent.putExtra("PRODUCT_OWNER", productOwner)
+        intent.putExtra("TANGGAL", tanggal)
+        intent.putExtra("KETERANGAN", keterangan)
+        intent.putExtra("ALAMAT", alamat)
         startActivity(intent)
-    }
-
-    private fun selectImageFromGallery() {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, "Pilih Gambar"), PICK_IMAGE_REQUEST)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
-            selectedImageUri = data.data
-            binding.imageView6.setImageURI(selectedImageUri) // Tampilkan gambar yang dipilih
-        }
-    }
-
-    companion object {
-        private const val PICK_IMAGE_REQUEST = 1
     }
 }

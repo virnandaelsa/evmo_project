@@ -6,192 +6,69 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/txHarga2"
+        android:id="@+id/txHarga4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="12dp"
         android:text="Rp. 5.000.000,00"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/imgProduk2"
-        app:layout_constraintTop_toBottomOf="@+id/txProduk2" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-<<<<<<< HEAD
-        android:layout_width="105dp"
-        android:layout_height="49dp"
-=======
-        android:layout_width="110dp"
-        android:layout_height="50dp"
->>>>>>> ec5453ed16b12f29d84ceaed0e8b2477f8cc36b3
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="25dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/wisma"
-        tools:srcCompat="@drawable/wisma" />
-
-    <ImageView
-<<<<<<< HEAD
-        android:id="@+id/imageView6"
-        android:layout_width="65dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        tools:srcCompat="@drawable/back" />
-
-    <ImageView
-=======
->>>>>>> ec5453ed16b12f29d84ceaed0e8b2477f8cc36b3
-        android:id="@+id/imgProduk2"
-        android:layout_width="120dp"
-        android:layout_height="90dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnKembali"
-        app:srcCompat="@color/design_default_color_primary"
-        tools:srcCompat="@color/design_default_color_primary" />
+        app:layout_constraintStart_toEndOf="@+id/imgProduk4"
+        app:layout_constraintTop_toBottomOf="@+id/txProduk4" />
 
     <TextView
-        android:id="@+id/txProduk2"
+        android:id="@+id/txToko4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="113dp"
-=======
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="125dp"
->>>>>>> ec5453ed16b12f29d84ceaed0e8b2477f8cc36b3
-        android:text="Siger Sunda"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imgProduk2"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txToko1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="11dp"
         android:text="SeMUA Evelyn"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/imgProduk2"
-        app:layout_constraintTop_toBottomOf="@+id/txHarga2" />
+        app:layout_constraintStart_toEndOf="@+id/imgProduk4"
+        app:layout_constraintTop_toBottomOf="@+id/txHarga4" />
 
     <TextView
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="52dp"
         android:text="Tanggal / Jam"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgProduk2" />
+        app:layout_constraintTop_toBottomOf="@+id/imgProduk4" />
 
-<<<<<<< HEAD
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout9"
-        android:layout_width="354dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edTanggal"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Tanggal / Jam"
-            android:inputType="datetime" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-=======
->>>>>>> ec5453ed16b12f29d84ceaed0e8b2477f8cc36b3
     <TextView
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="7dp"
         android:text="Keterangan"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout9" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout10"
-        android:layout_width="350dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edKet"
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:hint="Keterangan" />
-    </com.google.android.material.textfield.TextInputLayout>
-=======
-        app:layout_constraintTop_toBottomOf="@+id/edtTanggal" />
->>>>>>> ec5453ed16b12f29d84ceaed0e8b2477f8cc36b3
+        app:layout_constraintTop_toBottomOf="@+id/edTanggal" />
 
     <TextView
         android:id="@+id/textView22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="34dp"
         android:layout_marginTop="10dp"
         android:text="Alamat"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout10" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout11"
-        android:layout_width="351dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView22">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edAlamat"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Alamat" />
-    </com.google.android.material.textfield.TextInputLayout>
-=======
-        app:layout_constraintTop_toBottomOf="@+id/edtKeterangan" />
->>>>>>> ec5453ed16b12f29d84ceaed0e8b2477f8cc36b3
+        app:layout_constraintTop_toBottomOf="@+id/edKeterangan" />
 
     <TextView
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="26dp"
         android:text="Pembayaran"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -200,14 +77,12 @@
 
     <TextView
         android:id="@+id/textView24"
-        android:layout_width="320dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="40dp"
-        android:text="* Silahkan melakukan pembayaran DP apabila pesanan telah dikonfirmasi"
+        android:layout_width="321dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:text="* Silahkan melakukan pembayaran DP"
         android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
@@ -215,8 +90,8 @@
         android:id="@+id/textView25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="9dp"
         android:text="No. Rekening :"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -226,8 +101,8 @@
         android:id="@+id/textView26"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="9dp"
         android:text="1234567"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/textView25"
@@ -237,74 +112,96 @@
         android:id="@+id/btnPesanan"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="100dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="#385A7F"
         android:text="Buat Pesanan"
         app:cornerRadius="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
-    <Button
-        android:id="@+id/btnKembali"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="#FDF6FE"
-        android:textAlignment="viewStart"
-        app:icon="@drawable/back"
-        app:iconGravity="start"
-        app:iconSize="35dp"
-        app:iconTint="#385A7E"
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="75dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/wisma" />
 
-    <EditText
-        android:id="@+id/edtTanggal"
-        android:layout_width="322dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="40dp"
-        android:ems="10"
-        android:hint="tanggal"
-        android:inputType="text"
+    <ImageView
+        android:id="@+id/imgProduk4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="33dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:srcCompat="@drawable/wisma" />
+
+    <TextView
+        android:id="@+id/txProduk4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="94dp"
+        android:text="Siger Sunda"
         android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imgProduk4"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edTanggal"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView20">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edTanggalInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tanggal / Jam" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edKeterangan"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+        app:layout_constraintTop_toBottomOf="@+id/textView21">
 
-    <EditText
-        android:id="@+id/edtKeterangan"
-        android:layout_width="320dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="40dp"
-        android:ems="10"
-        android:hint="keterangan"
-        android:inputType="text"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edKeteranganInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Keterangan" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edAlamat"
-        android:layout_width="320dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="40dp"
-        android:ems="10"
-        android:hint="alamat"
-        android:inputType="text"
-        android:textSize="16sp"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+        app:layout_constraintTop_toBottomOf="@+id/textView22">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edAlamatInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Alamat" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

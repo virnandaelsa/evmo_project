@@ -27,7 +27,6 @@ class upload_dp : AppCompatActivity() {
         val productTitle = intent.getStringExtra("PRODUCT_TITLE")
         val productPrice = intent.getStringExtra("PRODUCT_PRICE")
         val productOwner = intent.getStringExtra("PRODUCT_OWNER")
-        val productImageUri = intent.getStringExtra("PRODUCT_IMAGE_URI")
         val tanggal = intent.getStringExtra("TANGGAL")
         val keterangan = intent.getStringExtra("KETERANGAN")
         val alamat = intent.getStringExtra("ALAMAT")
@@ -35,16 +34,10 @@ class upload_dp : AppCompatActivity() {
         // Menampilkan data produk ke UI
         binding.txProduk2.text = productTitle
         binding.txHarga2.text = productPrice
-        binding.txToko1.text = productOwner
-        binding.txtgl.text = tanggal // Menampilkan tanggal di TextView
+        binding.txToko2.text = productOwner
+        binding.txTgl.text = tanggal // Menampilkan tanggal di TextView
         binding.txket.text = keterangan // Menampilkan keterangan di TextView
         binding.txalamat.text = alamat // Menampilkan alamat di TextView
-
-        productImageUri?.let {
-            Glide.with(this)
-                .load(it) // URL gambar
-                .into(binding.imgProduk2) // ImageView untuk menampilkan gambar
-        }
 
         // Fungsi untuk memilih gambar DP menggunakan ImageButton
         binding.imgbtn.setOnClickListener {
@@ -52,7 +45,7 @@ class upload_dp : AppCompatActivity() {
         }
 
         // Tombol untuk mengupload bukti DP
-        binding.button7.setOnClickListener {
+        binding.btnKirim.setOnClickListener {
             if (serviceId != null) {
                 uploadImage(serviceId)
             } else {
@@ -113,7 +106,7 @@ class upload_dp : AppCompatActivity() {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             selectedImageUri = data.data
             // Menampilkan gambar yang dipilih pada ImageButton
-            binding.imgbtn.setImageURI(selectedImageUri) // Anda dapat mengganti ini dengan cara lain untuk menunjukkan gambar
+            binding.imgbtn.setImageURI(selectedImageUri)
         }
     }
 
