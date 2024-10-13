@@ -1,11 +1,11 @@
 package com.example.virnandaelsa_3
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.example.virnandaelsa_3.databinding.FragPemesananBinding
 import com.google.firebase.database.DatabaseReference
@@ -13,93 +13,114 @@ import com.google.firebase.database.FirebaseDatabase
 
 class tambah_transaksi : AppCompatActivity() {
 
+    private lateinit var database: DatabaseReference
+    private var selectedImageUri: Uri? = null // Inisialisasi sebagai nullable
     private lateinit var binding: FragPemesananBinding
-    private var selectedImageUri: Uri? = null
-    private lateinit var tanggal: String
-    private lateinit var keterangan: String
-    private lateinit var alamat: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Menggunakan View Binding
         binding = FragPemesananBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Ambil data dari intent
+        // Ambil data yang dikirim dari activity sebelumnya
         val serviceId = intent.getStringExtra("SERVICE_ID")
         val productTitle = intent.getStringExtra("PRODUCT_TITLE")
-        val productPrice = intent.getIntExtra("PRODUCT_PRICE", 0).toString() // Ubah menjadi String
+        val productPrice = intent.getStringExtra("PRODUCT_PRICE")
         val productOwner = intent.getStringExtra("PRODUCT_OWNER")
         val productImageUri = intent.getStringExtra("PRODUCT_IMAGE_URI")
 
-        // Menampilkan data produk ke UI
+        // Tampilkan data di layout menggunakan binding
         binding.txProduk4.text = productTitle
-        binding.txHarga4.text = productPrice
+        binding.txHarga4.text = "Rp $productPrice"
         binding.txToko4.text = productOwner
 
-        productImageUri?.let {
+        // Tampilkan gambar produk menggunakan Glide jika ada
+        if (productImageUri != null) {
             Glide.with(this)
-                .load(it) // URL gambar
-                .into(binding.imgProduk4) // ImageView untuk menampilkan gambar
+                .load(productImageUri)
+                .into(binding.imgProduk4)
         }
 
-        // Tombol untuk menambah transaksi
+        // Tombol untuk menyimpan data transaksi
         binding.btnPesanan.setOnClickListener {
-            uploadData(serviceId, productTitle, productPrice, productOwner)
+            val tanggal = binding.edTanggalInput.text.toString()
+            val keterangan = binding.edKeteranganInput.text.toString()
+            val alamat = binding.edAlamatInput.text.toString()
+
+            // Convert price from String to Int
+            val productPriceInt = productPrice?.toIntOrNull() // Safely convert to Int
+
+            // Simpan transaksi
+            simpanTransaksi(
+                serviceId,
+                productTitle,
+                productPriceInt,
+                productOwner,
+                productImageUri, // Menggunakan imageUrl dari Firebase
+                tanggal,
+                keterangan,
+                alamat
+            )
+        }
+
+        // TextInput untuk tanggal dan keterangan
+        binding.edTanggalInput.addTextChangedListener {
+            // Aksi yang dilakukan ketika input tanggal diubah
+        }
+
+        binding.edKeteranganInput.addTextChangedListener {
+            // Aksi yang dilakukan ketika input keterangan diubah
+        }
+        binding.edAlamatInput.addTextChangedListener {
+            // Aksi yang dilakukan ketika input alamat diubah
         }
     }
 
-    private fun uploadData(serviceId: String?, productTitle: String?, productPrice: String?, productOwner: String?) {
-        // Ambil input dari TextInputEditText
-        val tanggal = binding.edTanggalInput.text.toString()
-        val keterangan = binding.edKeteranganInput.text.toString()
-        val alamat = binding.edAlamatInput.text.toString()
-
-        // Validasi input
-        if (tanggal.isEmpty() || keterangan.isEmpty() || alamat.isEmpty()) {
-            Toast.makeText(this, "Silakan isi semua field", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        // Konversi harga dari String ke Int
-        val harga = productPrice?.toIntOrNull() ?: 0 // Ubah harga ke Int, jika tidak ada set 0
-
-        // Membuat objek Jasa yang akan disimpan
-        val jasa = Jasa(
-            id = serviceId ?: "", // ID Jasa
-            tanggal = tanggal,
-            keterangan = keterangan,
-            alamat = alamat,
-            judul = productTitle ?: "",
-            harga = harga, // Pastikan ini adalah Int
-            toko = productOwner ?: "",
-            imageUrl = selectedImageUri.toString() // Jika ada gambar
+    // Fungsi untuk menyimpan transaksi ke Firebase
+    private fun simpanTransaksi(
+        serviceId: String?,
+        productTitle: String?,
+        productPrice: Int?,
+        productOwner: String?,
+        imageUrl: String?, // Menggunakan imageUrl yang diterima dari intent
+        tanggal: String?,
+        keterangan: String?,
+        alamat: String?
+    ) {
+        val transaksi = mapOf(
+            "id" to serviceId,
+            "judul" to productTitle,
+            "harga" to productPrice,
+            "toko" to productOwner,
+            "imageUrl" to (imageUrl ?: ""), // Jika `dpUri` kosong, berikan nilai default
+            "tanggal" to tanggal,
+            "keterangan" to keterangan,
+            "alamat" to alamat
         )
 
-        // Simpan ke Firebase Realtime Database
-        val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("EVMO")
-
-        // Menyimpan data ke Realtime Database dengan ID yang sesuai
-        database.child(serviceId ?: "").setValue(jasa)
+        // Insert to Firebase
+        database = FirebaseDatabase.getInstance().getReference("Transaksi")
+        database.push().setValue(transaksi)
             .addOnSuccessListener {
-                Toast.makeText(this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show()
-                // Panggil fungsi untuk navigasi setelah penyimpanan berhasil
-                navigateToUploadDP(serviceId, productTitle, productPrice, productOwner, tanggal, keterangan, alamat)
+                Toast.makeText(this, "Transaksi berhasil disimpan!", Toast.LENGTH_SHORT).show()
+
+                // Navigasi ke upload_dp setelah menyimpan transaksi
+                val intent = Intent(this, upload_dp::class.java).apply {
+                    putExtra("SERVICE_ID", serviceId)
+                    putExtra("PRODUCT_TITLE", productTitle)
+                    putExtra("PRODUCT_PRICE", productPrice)
+                    putExtra("PRODUCT_OWNER", productOwner)
+                    putExtra("PRODUCT_IMAGE_URI", imageUrl) // Kirim dpUri ke upload_dp
+                    putExtra("TANGGAL", tanggal)
+                    putExtra("KETERANGAN", keterangan)
+                    putExtra("ALAMAT", alamat)
+                }
+                startActivity(intent)
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Gagal menyimpan data: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Gagal menyimpan transaksi: ${e.message}", Toast.LENGTH_SHORT).show()
             }
-    }
-    // Setelah menyimpan data, navigasi ke halaman upload DP
-    private fun navigateToUploadDP(serviceId: String?, productTitle: String?, productPrice: String?, productOwner: String?, tanggal: String, keterangan: String, alamat: String) {
-        // Halaman tambah transaksi
-        val intent = Intent(this, upload_dp::class.java)
-        intent.putExtra("SERVICE_ID", serviceId)
-        intent.putExtra("PRODUCT_TITLE", productTitle)
-        intent.putExtra("PRODUCT_PRICE", productPrice)
-        intent.putExtra("PRODUCT_OWNER", productOwner)
-        intent.putExtra("TANGGAL", tanggal)
-        intent.putExtra("KETERANGAN", keterangan)
-        intent.putExtra("ALAMAT", alamat)
-        startActivity(intent)
     }
 }
