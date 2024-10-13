@@ -39,15 +39,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/design_default_color_primary_variant"
-        tools:srcCompat="@color/design_default_color_primary_variant" />
+        app:srcCompat="@color/material_dynamic_neutral60"
+        tools:srcCompat="@color/material_dynamic_neutral60" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="39dp"
-        android:layout_marginTop="195dp"
+        android:layout_marginTop="175dp"
         android:text="Nama"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -56,11 +56,11 @@
 
     <EditText
         android:id="@+id/txName"
-        android:layout_width="320dp"
+        android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_marginStart="39dp"
+        android:layout_marginStart="65dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="39dp"
+        android:layout_marginEnd="96dp"
         android:ems="10"
         android:hint="nama"
         android:inputType="text"
@@ -83,11 +83,11 @@
 
     <EditText
         android:id="@+id/txTelepon"
-        android:layout_width="320dp"
+        android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_marginStart="39dp"
+        android:layout_marginStart="65dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="39dp"
+        android:layout_marginEnd="96dp"
         android:ems="10"
         android:hint="nomor telepon"
         android:inputType="text"
@@ -109,11 +109,11 @@
 
     <EditText
         android:id="@+id/txEmail"
-        android:layout_width="320dp"
+        android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_marginStart="39dp"
+        android:layout_marginStart="65dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="39dp"
+        android:layout_marginEnd="96dp"
         android:ems="10"
         android:hint="gmail"
         android:inputType="text"
@@ -135,11 +135,11 @@
 
     <EditText
         android:id="@+id/txAlamatProf"
-        android:layout_width="320dp"
+        android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_marginStart="39dp"
+        android:layout_marginStart="65dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="39dp"
+        android:layout_marginEnd="96dp"
         android:ems="10"
         android:hint="alamat"
         android:inputType="text"
@@ -180,7 +180,7 @@
         android:layout_width="415dp"
         android:layout_height="903dp"
         android:layout_below="@id/btnBkProfile"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
