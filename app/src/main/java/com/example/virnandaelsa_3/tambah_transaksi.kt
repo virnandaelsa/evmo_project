@@ -66,16 +66,9 @@ class tambah_transaksi : AppCompatActivity() {
         }
 
         // TextInput untuk tanggal dan keterangan
-        binding.edTanggalInput.addTextChangedListener {
-            // Aksi yang dilakukan ketika input tanggal diubah
-        }
-
-        binding.edKeteranganInput.addTextChangedListener {
-            // Aksi yang dilakukan ketika input keterangan diubah
-        }
-        binding.edAlamatInput.addTextChangedListener {
-            // Aksi yang dilakukan ketika input alamat diubah
-        }
+        binding.edTanggalInput.addTextChangedListener { }
+        binding.edKeteranganInput.addTextChangedListener { }
+        binding.edAlamatInput.addTextChangedListener { }
     }
 
     // Fungsi untuk menyimpan transaksi ke Firebase
@@ -89,6 +82,7 @@ class tambah_transaksi : AppCompatActivity() {
         keterangan: String?,
         alamat: String?
     ) {
+        // Membuat map untuk transaksi
         val transaksi = mapOf(
             "id" to serviceId,
             "judul" to productTitle,
@@ -102,8 +96,12 @@ class tambah_transaksi : AppCompatActivity() {
 
         // Insert to Firebase
         database = FirebaseDatabase.getInstance().getReference("Transaksi")
-        database.push().setValue(transaksi)
+        val newTransactionRef = database.push() // Buat referensi baru
+        newTransactionRef.setValue(transaksi)
             .addOnSuccessListener {
+                // Ambil transaction ID yang baru dibuat
+                val transactionId = newTransactionRef.key
+
                 Toast.makeText(this, "Transaksi berhasil disimpan!", Toast.LENGTH_SHORT).show()
 
                 // Navigasi ke upload_dp setelah menyimpan transaksi
@@ -116,6 +114,7 @@ class tambah_transaksi : AppCompatActivity() {
                     putExtra("TANGGAL", tanggal)
                     putExtra("KETERANGAN", keterangan)
                     putExtra("ALAMAT", alamat)
+                    putExtra("TRANSACTION_ID", transactionId) // Kirim transactionId ke upload_dp
                 }
                 startActivity(intent)
             }

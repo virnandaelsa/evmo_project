@@ -50,6 +50,14 @@
             android:name=".upload_dp"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".PesananSaya"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".DetailPesanan"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

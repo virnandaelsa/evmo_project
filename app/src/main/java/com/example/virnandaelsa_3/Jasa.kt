@@ -10,7 +10,8 @@ data class Jasa(
     val dpUri: String? = null,        // Optional, add as needed
     val tanggal: String? = null,      // Optional, add as needed
     val keterangan: String? = null,   // Optional, add as needed
-    val alamat: String? = null         // Optional, add as needed
+    val alamat: String? = null,      // Optional, add as needed
+    val transactionId: String? = null
 )
 
 

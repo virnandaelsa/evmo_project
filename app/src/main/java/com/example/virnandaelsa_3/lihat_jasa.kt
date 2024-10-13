@@ -4,7 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.fragment.app.FragmentTransaction // Binding diubah untuk LihatJasa
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.graphics.Color // Perbaikan import Color
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -12,17 +16,27 @@ import com.bumptech.glide.Glide
 import com.example.virnandaelsa_3.databinding.FragJasaBinding
 import com.google.firebase.database.*
 
-class lihat_jasa : AppCompatActivity() {
+class lihat_jasa : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var binding: FragJasaBinding
+    lateinit var binding: FragJasaBinding // Binding untuk layout lihat_jasa
+    lateinit var edProfile: EdProfile
+    lateinit var fragPesanan: PesananSaya
+    lateinit var ft : FragmentTransaction
     private lateinit var listView: ListView
     private lateinit var jasaList: MutableList<Jasa>
     private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragJasaBinding.inflate(layoutInflater)
+        binding = FragJasaBinding.inflate(layoutInflater) // Binding diubah untuk layout lihat_jasa
         setContentView(binding.root)
+
+        // Menggunakan binding untuk mengakses elemen layout dan mengatur listener
+        binding.bnv2.setOnNavigationItemSelectedListener(this)
+
+        // Inisialisasi fragment
+        edProfile = EdProfile()
+        fragPesanan = PesananSaya()
 
         listView = binding.listViewJasa
         jasaList = mutableListOf()
@@ -32,8 +46,27 @@ class lihat_jasa : AppCompatActivity() {
         // Mengambil data dari Firebase Realtime Database
         fetchJasaData()
     }
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        // Logika saat item di bottom navigation dipilih
+        when (item.itemId) {
+            R.id.itemLaporan -> {
+                ft = supportFragmentManager.beginTransaction()
+                ft.replace(R.id.fragmentLayout2, fragPesanan).commit()
+                binding.fragmentLayout2.setBackgroundColor(Color.argb(245, 255, 255, 255)) // Gunakan android.graphics.Color
+                binding.fragmentLayout2.visibility = View.VISIBLE
+            }
+            R.id.itemUser -> {
+                ft = supportFragmentManager.beginTransaction()
+                ft.replace(R.id.fragmentLayout2, edProfile).commit()
+                binding.fragmentLayout2.setBackgroundColor(Color.argb(245, 255, 255, 255)) // Gunakan android.graphics.Color
+                binding.fragmentLayout2.visibility = View.VISIBLE
+            }
+            R.id.itemHome -> binding.fragmentLayout2.visibility = View.GONE
+        }
+        return true // Mengembalikan true untuk menunjukkan bahwa item telah dipros
+    }
 
-    private fun fetchJasaData() {
+        private fun fetchJasaData() {
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 jasaList.clear()

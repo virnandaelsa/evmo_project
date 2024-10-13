@@ -44,10 +44,11 @@ class upload_dp : AppCompatActivity() {
         val tanggal = intent.getStringExtra("TANGGAL")
         val keterangan = intent.getStringExtra("KETERANGAN")
         val alamat = intent.getStringExtra("ALAMAT")
+        val transactionId = intent.getStringExtra("TRANSACTION_ID") // Ambil transactionId
 
         // Tampilkan data di layout
         binding.txProduk2.text = productTitle
-        binding.txhargadp.text = productPrice // Pastikan ID ini benar
+        binding.txhargadp.text = "Rp $productPrice"
         binding.txToko2.text = productOwner
         binding.txTgl.text = tanggal
         binding.txket.text = keterangan
@@ -69,7 +70,7 @@ class upload_dp : AppCompatActivity() {
         // Tombol untuk mengunggah DP
         binding.btnKirim.setOnClickListener {
             if (selectedImageUri != null) {
-                uploadDpToFirebase(selectedImageUri!!, serviceId, productTitle, productPrice, productOwner, productImageUri, tanggal, keterangan, alamat)
+                uploadDpToFirebase(selectedImageUri!!, transactionId) // Kirim transactionId ke fungsi upload
             } else {
                 Toast.makeText(this, "Silakan pilih gambar DP terlebih dahulu.", Toast.LENGTH_SHORT).show()
             }
@@ -92,14 +93,7 @@ class upload_dp : AppCompatActivity() {
     // Fungsi untuk mengunggah DP ke Firebase Storage
     private fun uploadDpToFirebase(
         imageUri: Uri,
-        serviceId: String?,
-        productTitle: String?,
-        productPrice: String?,
-        productOwner: String?,
-        productImageUri: String?,
-        tanggal: String?,
-        keterangan: String?,
-        alamat: String?
+        transactionId: String? // Terima transactionId untuk memperbarui data
     ) {
         // Tampilkan progress dialog
         progressDialog = ProgressDialog(this)
@@ -117,34 +111,30 @@ class upload_dp : AppCompatActivity() {
                     // Gambar berhasil diunggah, dapatkan URL-nya
                     val dpUrl = uri.toString()
 
-                    // Simpan data transaksi dan URL DP ke Firebase Realtime Database
-                    val transaksi = mapOf(
-                        "serviceId" to serviceId,
-                        "judul" to productTitle,
-                        "harga" to productPrice?.toIntOrNull(),
-                        "toko" to productOwner,
-                        "dpUri" to dpUrl, // Menyimpan URL DP
-                        "imageUri" to productImageUri, // Menyimpan URL gambar produk
-                        "tanggal" to tanggal,
-                        "keterangan" to keterangan,
-                        "alamat" to alamat
+                    // Simpan data DP ke transaksi yang sudah ada
+                    val dpUpdate = mapOf(
+                        "dpUri" to dpUrl // Menambahkan URL DP ke transaksi
                     )
 
-                    // Insert to Firebase
-                    database.push().setValue(transaksi)
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "DP berhasil diunggah dan transaksi disimpan!", Toast.LENGTH_SHORT).show()
-                            progressDialog.dismiss()
+                    // Perbarui transaksi yang sudah ada
+                    if (transactionId != null) {
+                        database.child(transactionId).updateChildren(dpUpdate)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "DP berhasil diunggah!", Toast.LENGTH_SHORT).show()
+                                progressDialog.dismiss()
 
-                            // Navigasi ke lihat_jasa
-                            val intent = Intent(this, lihat_jasa::class.java) // Ganti dengan nama aktivitas yang benar
-                            startActivity(intent)
-                            finish() // Kembali ke activity sebelumnya jika diperlukan
-                        }
-                        .addOnFailureListener { e ->
-                            Toast.makeText(this, "Gagal menyimpan transaksi: ${e.message}", Toast.LENGTH_SHORT).show()
-                            progressDialog.dismiss()
-                        }
+                                // Navigasi ke aktivitas lain jika perlu
+                                startActivity(Intent(this, lihat_jasa::class.java))
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, "Gagal memperbarui transaksi: ${e.message}", Toast.LENGTH_SHORT).show()
+                                progressDialog.dismiss()
+                            }
+                    } else {
+                        Toast.makeText(this, "Transaction ID tidak valid.", Toast.LENGTH_SHORT).show()
+                        progressDialog.dismiss()
+                    }
                 }
             }
             .addOnFailureListener { e ->
