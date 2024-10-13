@@ -6,35 +6,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.virnandaelsa_3.databinding.FragJasaBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 
 class lihat_jasa : AppCompatActivity() {
+
     private lateinit var binding: FragJasaBinding
-    private lateinit var database: DatabaseReference
+    private lateinit var listView: ListView
     private lateinit var jasaList: MutableList<Jasa>
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragJasaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inisialisasi Realtime Database
-        database = FirebaseDatabase.getInstance().getReference("EVMO")
+        listView = binding.listViewJasa
         jasaList = mutableListOf()
 
-        // Mengambil data dari Realtime Database
+        database = FirebaseDatabase.getInstance().getReference("EVMO")
+
+        // Mengambil data dari Firebase Realtime Database
         fetchJasaData()
     }
 
@@ -42,75 +37,68 @@ class lihat_jasa : AppCompatActivity() {
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 jasaList.clear()
-                for (jasaSnapshot in snapshot.children) {
-                    val jasa = jasaSnapshot.getValue(Jasa::class.java)
-                    jasa?.let {
-                        jasaList.add(it)
-                    }
+                for (dataSnapshot in snapshot.children) {
+                    val id = dataSnapshot.child("id").getValue(String::class.java) ?: ""
+                    val judul = dataSnapshot.child("judul").getValue(String::class.java) ?: ""
+                    val harga = dataSnapshot.child("harga").getValue(Long::class.java) ?: 0L
+                    val toko = dataSnapshot.child("toko").getValue(String::class.java) ?: ""
+                    val imageUrl = dataSnapshot.child("imageUrl").getValue(String::class.java) ?: ""
+
+                    val jasa = Jasa(id, judul, harga, toko, imageUrl)
+                    jasaList.add(jasa)
                 }
-                // Menampilkan data di ListView dengan Custom Adapter
-                val adapter = JasaAdapter(this@lihat_jasa, jasaList)
-                binding.listViewJasa.adapter = adapter
+                listView.adapter = JasaAdapter(this@lihat_jasa, jasaList)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@lihat_jasa, "Error fetching data: ${error.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@lihat_jasa, "Gagal mengambil data: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
-    class JasaAdapter(
-        context: Context,
+
+    // Adapter untuk menampilkan daftar jasa
+    inner class JasaAdapter(
+        private val context: Context,
         private val jasaList: List<Jasa>
-    ) : ArrayAdapter<Jasa>(context, 0, jasaList) {
+    ) : ArrayAdapter<Jasa>(context, R.layout.item_jasa, jasaList) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            // Mendapatkan item jasa yang ingin ditampilkan
-            val jasa = getItem(position)
-
-            // Memastikan view untuk item jasa
             val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.item_jasa, parent, false)
+            val jasa = jasaList[position]
 
-            // Menghubungkan data dengan tampilan
+            // Bind data ke tampilan item_jasa
+            val titleTextView = view.findViewById<TextView>(R.id.tx_judul)
+            val priceTextView = view.findViewById<TextView>(R.id.tx_harga)
+            val ownerTextView = view.findViewById<TextView>(R.id.tx_namapj)
             val imageView = view.findViewById<ImageView>(R.id.imageJasa)
-            val textViewJudul = view.findViewById<TextView>(R.id.tx_judul)
-            val textViewHarga = view.findViewById<TextView>(R.id.tx_harga)
-            val textViewToko = view.findViewById<TextView>(R.id.tx_namapj)
             val buttonPesan = view.findViewById<Button>(R.id.buttonPesan)
 
-            // Set data
-            textViewJudul.text = jasa?.judul
-            // Konversi harga dari Integer ke String
-            textViewHarga.text = "Rp ${jasa?.harga?.toString() ?: "0"}" // Jika harga null, tampilkan "0"
-            textViewToko.text = jasa?.toko
+            titleTextView.text = jasa.judul
+            priceTextView.text = "Rp ${jasa.harga}" // Menampilkan harga dalam format rupiah
+            ownerTextView.text = jasa.toko
 
-            // Load gambar jika ada
-            val fotoUrl = jasa?.imageUrl
-                    if (!fotoUrl.isNullOrEmpty()) {
-                        Glide.with(context)
-                            .load(fotoUrl) // Memuat gambar menggunakan Glide
-                            .into(imageView)
-                    } else {
-                        imageView.setImageResource(R.drawable.wisma) // Gambar default jika tidak ada URL
-                    }
+            // Memuat gambar dengan Glide
+            Glide.with(context)
+                .load(jasa.imageUrl)
+                .error(R.drawable.wisma) // Gambar placeholder jika gagal memuat
+                .into(imageView)
 
-            // Set listener untuk tombol pesan
+            // Set click listener untuk tombol pesan
             buttonPesan.setOnClickListener {
-                buttonPesan.setOnClickListener {
-                    jasa?.let {
-                        val intent = Intent(context, tambah_transaksi::class.java)
-                        intent.putExtra("SERVICE_ID", it.id) // ID jasa
-                        intent.putExtra("PRODUCT_TITLE", it.judul) // Judul produk
-                        intent.putExtra("PRODUCT_PRICE", it.harga.toString())  // Harga produk
-                        intent.putExtra("PRODUCT_OWNER", it.toko)
-                        intent.putExtra("PRODUCT_IMAGE_URI", it.imageUrl) // URL gambar produk
-                        context.startActivity(intent)
-                    }
+                val intent = Intent(context, tambah_transaksi::class.java).apply {
+                    putExtra("SERVICE_ID", jasa.id)
+                    putExtra("PRODUCT_TITLE", jasa.judul)
+                    putExtra("PRODUCT_PRICE", jasa.harga.toString())
+                    putExtra("PRODUCT_OWNER", jasa.toko)
+                    putExtra("PRODUCT_IMAGE_URI", jasa.imageUrl)
                 }
-
+                context.startActivity(intent)
             }
+
+            // Pastikan tidak ada klik listener untuk imageView
+            imageView.setOnClickListener(null)
 
             return view
         }
     }
 }
-

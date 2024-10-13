@@ -132,13 +132,13 @@
 
     <ImageView
         android:id="@+id/imgProduk4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="109dp"
+        android:layout_height="98dp"
         android:layout_marginStart="29dp"
         android:layout_marginTop="33dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5"
-        app:srcCompat="@drawable/wisma" />
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/txProduk4"
