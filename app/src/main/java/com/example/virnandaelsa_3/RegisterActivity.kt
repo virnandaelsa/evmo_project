@@ -10,6 +10,7 @@ import com.example.virnandaelsa_3.Models.RegisterResponse
 import com.example.virnandaelsa_3.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.database.FirebaseDatabase
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -66,7 +67,7 @@ class RegisterActivity: AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            registerUserMySQL(nama, email, alamat, no_telp, username, password)
+//            registerUserMySQL(nama, email, alamat, no_telp, username, password)
             registerUserFirebase(nama, email, alamat, no_telp, username, password)
         }
     }
@@ -117,11 +118,12 @@ class RegisterActivity: AppCompatActivity() {
         })
     }
 
-    fun registerUserFirebase(nama: String, email: String, alamat: String, no_telp: String, username: String, password: String){
+    fun registerUserFirebase(nama: String, email: String, alamat: String, no_telp: String, username: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
                 val user_id = auth.currentUser?.uid
                 user_id?.let {
+                    // Membuat objek pengguna
                     val user = hashMapOf(
                         "user_id" to it,
                         "nama" to nama,
@@ -130,7 +132,12 @@ class RegisterActivity: AppCompatActivity() {
                         "no_telp" to no_telp,
                         "username" to username
                     )
-                    db.collection("users").document(it).set(user).addOnSuccessListener {
+
+                    // Menyimpan data pengguna ke Realtime Database
+                    val database = FirebaseDatabase.getInstance()
+                    val myRef = database.getReference("users").child(it) // Menggunakan user_id sebagai ID node
+
+                    myRef.setValue(user).addOnSuccessListener {
                         Toast.makeText(this@RegisterActivity, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                         startActivity(intent)
@@ -139,6 +146,8 @@ class RegisterActivity: AppCompatActivity() {
                         Toast.makeText(this, "Registrasi Gagal", Toast.LENGTH_SHORT).show()
                     }
                 }
+            } else {
+                Toast.makeText(this, "Gagal membuat akun: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }

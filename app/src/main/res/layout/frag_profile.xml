@@ -39,8 +39,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/material_dynamic_neutral60"
-        tools:srcCompat="@color/material_dynamic_neutral60" />
+        app:srcCompat="@color/hai"
+        tools:srcCompat="@color/hai" />
 
     <TextView
         android:id="@+id/textView4"

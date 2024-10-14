@@ -20,7 +20,7 @@ class KatalogActivity : AppCompatActivity() {
     }
 
     fun fetchKatalogData() {
-        val token = "Bearer 29|3D6CmJZCvpMgxXq4k7cYVZOIbybqDn8DaKAIFOKb637f690b"
+        val token = "Bearer 1|8iPRAhf8mYWnBUqZAczomAOtPvNMT0tq6hggLocF781856f6"
         val call = ApiClient.apiService.getKatalog(token)
         call.enqueue(object : Callback<KatalogResponse> {
             override fun onResponse(call: Call<KatalogResponse>, response: Response<KatalogResponse>) {
@@ -28,7 +28,8 @@ class KatalogActivity : AppCompatActivity() {
                     val katalogData = response.body()?.data
                     katalogData?.let {
                         val penjualList = it.penjual ?: emptyList()
-                        val adapter = KatalogAdapter(this@KatalogActivity, penjualList)
+                        val user = it.user
+                        val adapter = KatalogAdapter(this@KatalogActivity, penjualList, user)
 
                         binding.listViewJasa.adapter = adapter
                     }
@@ -36,7 +37,7 @@ class KatalogActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<KatalogResponse>, t: Throwable) {
-                // Handle failure
+
             }
         })
     }

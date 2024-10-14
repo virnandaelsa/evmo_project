@@ -10,7 +10,8 @@ data class KatalogData(
     val kategori: List<Kategori>,
     val penjual: List<Penjual>?,
     val detail_katalog: List<DetailKatalog>,
-    val role: Int
+    val role: Int,
+    val user: String
 )
 
 data class Kategori(

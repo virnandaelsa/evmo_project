@@ -6,95 +6,11 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="110dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="25dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/wisma"
-        tools:srcCompat="@drawable/wisma" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:text="Untuk Anda"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView2" />
-
-    <ImageView
-        android:id="@+id/imgProduk"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView"
-        app:srcCompat="@color/design_default_color_primary"
-        tools:srcCompat="@android:color/holo_purple" />
-
-    <TextView
-        android:id="@+id/txProduk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="125dp"
-        android:text="Siger Sunda"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/imgProduk"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txHarga"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Rp. 5.000.000,00"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/imgProduk"
-        app:layout_constraintTop_toBottomOf="@id/txProduk" />
-
-    <TextView
-        android:id="@+id/txToko"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="SeMUA Evelyn"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/imgProduk"
-        app:layout_constraintTop_toBottomOf="@id/txHarga" />
-
-    <Button
-        android:id="@+id/btnPesan"
-        android:layout_width="95dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="178dp"
-        android:layout_marginEnd="30dp"
-        android:backgroundTint="#385A7F"
-        android:text="Pesan"
-        android:textAlignment="center"
-        android:textSize="14sp"
-        app:cornerRadius="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txToko"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnv1"
         android:layout_width="410dp"
         android:layout_height="60dp"
-        android:background="@color/material_dynamic_primary40"
+        android:background="#FF385A7F"
         app:backgroundTint="#385A7F"
         app:elevation="10dp"
         app:itemBackground="@null"

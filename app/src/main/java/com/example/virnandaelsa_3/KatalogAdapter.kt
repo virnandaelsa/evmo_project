@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import com.bumptech.glide.Glide
 import com.example.virnandaelsa_3.Models.Penjual
 import com.example.virnandaelsa_3.databinding.ItemJasaBinding
 
-class KatalogAdapter(val context: Context, val penjualList: List<Penjual>) : BaseAdapter() {
+class KatalogAdapter(val context: Context, val penjualList: List<Penjual>, val user: String) : BaseAdapter() {
 
     override fun getCount(): Int {
         return penjualList.size
@@ -37,9 +38,15 @@ class KatalogAdapter(val context: Context, val penjualList: List<Penjual>) : Bas
 
         val penjual = getItem(p0) as Penjual
         val detailKatalogItem = penjual.detail_katalog.firstOrNull()
+        val baseUrl = "http://10.0.2.2:8000/images/gambar_detail_katalog/"
+        val imageUrl = detailKatalogItem?.gambar?.let { baseUrl + it }
 
         binding.txJudul.text = penjual.judul
         binding.txHarga.text = "Rp ${detailKatalogItem?.harga}"
+        binding.txNamapj.text = "$user"
+        Glide.with(context)
+            .load(imageUrl)
+            .into(binding.imageJasa)
 
         return view
     }

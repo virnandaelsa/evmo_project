@@ -1,5 +1,7 @@
 package com.example.virnandaelsa_3
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginActivity : AppCompatActivity() {
@@ -40,8 +46,13 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            loginUserMySQL(username, password)
+//            loginUserMySQL(username, password)
             loginUserFirebase(username, password)
+        }
+
+        binding.btnRegister.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -69,35 +80,50 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun loginUserFirebase(username: String, password: String) {
-        db.collection("users")
-            .whereEqualTo("username", username)
-            .get()
-            .addOnSuccessListener { documents ->
-                if (!documents.isEmpty) {
-                    for (document in documents) {
-                        val email = document.getString("email")
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("users")
+
+        // Mencari pengguna berdasarkan username
+        myRef.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Mengambil data pengguna
+                    for (snapshot in dataSnapshot.children) {
+                        val email = snapshot.child("email").getValue(String::class.java)
                         if (email != null) {
                             loginUserWithEmailAndPassword(email, password)
                         }
                     }
                 } else {
-                    Toast.makeText(this, "Username tidak ditemukan", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "Username tidak ditemukan", Toast.LENGTH_SHORT).show()
                 }
             }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Gagal mencari username: ${e.message}", Toast.LENGTH_SHORT).show()
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Toast.makeText(this@LoginActivity, "Gagal mencari username: ${databaseError.message}", Toast.LENGTH_SHORT).show()
             }
+        })
     }
 
     private fun loginUserWithEmailAndPassword(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    val userId = auth.currentUser?.uid
+                    val sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+                    with(sharedPref.edit()) {
+                        putString("user_id", userId)
+                        apply()
+                    }
                     Toast.makeText(this, "Login berhasil!", Toast.LENGTH_SHORT).show()
                     // Redirect ke halaman utama
+                    val intent = Intent(this, DashboardActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 } else {
                     Toast.makeText(this, "Login gagal: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
     }
+
 }
