@@ -47,12 +47,10 @@
         </activity>
         <activity
             android:name=".lihat_jasa"
-<<<<<<< HEAD
+
             android:exported="true">
         </activity>
-=======
-            android:exported="true" />
->>>>>>> c559f21fd352ae79259843ee7f767fc1a87f54d1
+
         <activity
             android:name=".tambah_transaksi"
             android:exported="true" />

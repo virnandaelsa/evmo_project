@@ -20,7 +20,7 @@ class KatalogActivity : AppCompatActivity() {
     }
 
     fun fetchKatalogData() {
-        val token = "Bearer 1|8iPRAhf8mYWnBUqZAczomAOtPvNMT0tq6hggLocF781856f6"
+        val token = "Bearer 2|nttRA9hs8GPfR5xpAurA8p3nrbMp8Stza4k0ajfK6b9e3fde"
         val call = ApiClient.apiService.getKatalog(token)
         call.enqueue(object : Callback<KatalogResponse> {
             override fun onResponse(call: Call<KatalogResponse>, response: Response<KatalogResponse>) {
