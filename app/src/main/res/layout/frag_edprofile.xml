@@ -36,13 +36,13 @@
 
     <TextView
         android:id="@+id/txNama"
-        android:layout_width="320dp"
+        android:layout_width="250dp"
         android:layout_height="35dp"
-        android:layout_marginStart="45dp"
+        android:layout_marginStart="65dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="45dp"
+        android:layout_marginEnd="96dp"
         android:text="nama"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,13 +51,13 @@
 
     <TextView
         android:id="@+id/txNomor"
-        android:layout_width="320dp"
+        android:layout_width="250dp"
         android:layout_height="35dp"
-        android:layout_marginStart="45dp"
+        android:layout_marginStart="65dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="45dp"
+        android:layout_marginEnd="96dp"
         android:text="nomor"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,13 +65,13 @@
 
     <TextView
         android:id="@+id/txGmail"
-        android:layout_width="320dp"
+        android:layout_width="250dp"
         android:layout_height="35dp"
-        android:layout_marginStart="45dp"
+        android:layout_marginStart="65dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="45dp"
+        android:layout_marginEnd="96dp"
         android:text="email"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,13 +79,13 @@
 
     <TextView
         android:id="@+id/txAlamat1"
-        android:layout_width="320dp"
+        android:layout_width="250dp"
         android:layout_height="35dp"
-        android:layout_marginStart="45dp"
+        android:layout_marginStart="65dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="45dp"
+        android:layout_marginEnd="96dp"
         android:text="alamat"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -127,8 +127,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/design_default_color_primary"
-        tools:srcCompat="@color/design_default_color_primary" />
+        app:srcCompat="@color/material_dynamic_neutral60"
+        tools:srcCompat="@color/material_dynamic_neutral60" />
 
     <TextView
         android:id="@+id/txNama1"

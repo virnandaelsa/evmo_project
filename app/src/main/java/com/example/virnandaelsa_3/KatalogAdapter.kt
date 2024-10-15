@@ -1,0 +1,47 @@
+package com.example.virnandaelsa_3
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseAdapter
+import com.example.virnandaelsa_3.Models.Penjual
+import com.example.virnandaelsa_3.databinding.ItemJasaBinding
+
+class KatalogAdapter(val context: Context, val penjualList: List<Penjual>) : BaseAdapter() {
+
+    override fun getCount(): Int {
+        return penjualList.size
+    }
+
+    override fun getItem(p0: Int): Any {
+        return penjualList[p0]
+    }
+
+    override fun getItemId(p0: Int): Long {
+        return p0.toLong()
+    }
+
+    override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
+        val binding: ItemJasaBinding
+        val view: View
+
+        if (p1 == null) {
+            binding = ItemJasaBinding.inflate(LayoutInflater.from(context), p2, false)
+            view = binding.root
+            view.tag = binding
+        } else {
+            binding = p1.tag as ItemJasaBinding
+            view = p1
+        }
+
+        val penjual = getItem(p0) as Penjual
+        val detailKatalogItem = penjual.detail_katalog.firstOrNull()
+
+        binding.txJudul.text = penjual.judul
+        binding.txHarga.text = "Rp ${detailKatalogItem?.harga}"
+
+        return view
+    }
+
+}
