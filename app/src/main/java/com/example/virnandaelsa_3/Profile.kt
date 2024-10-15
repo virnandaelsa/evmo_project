@@ -1,5 +1,6 @@
 package com.example.virnandaelsa_3
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -7,14 +8,16 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
+import com.bumptech.glide.Glide
 import com.example.virnandaelsa_3.databinding.FragProfileBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import com.bumptech.glide.Glide // Pastikan menambahkan Glide di build.gradle
 
 class Profile : AppCompatActivity(), View.OnClickListener {
 
@@ -37,26 +40,36 @@ class Profile : AppCompatActivity(), View.OnClickListener {
         binding.ImgProf.setOnClickListener { openGallery() } // Set click listener untuk ImageView
 
         // Menginisialisasi Firebase Database
-        db = FirebaseDatabase.getInstance().getReference("Customer")
+        db = FirebaseDatabase.getInstance().getReference("users")
+
+
+
+
 
         // Load data pelanggan
         loadCustomerData()
     }
 
     private fun loadCustomerData() {
-        db.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (dataSnapshot in snapshot.children) {
-                        val customer = dataSnapshot.getValue(Customer::class.java)
+
+        val sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        val userId = sharedPref.getString("user_id", null)
+
+        Log.d("EdProfile", "$userId")
+
+        if (userId != null) {
+            // Mengambil data pelanggan berdasarkan userId
+            db.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val customer = snapshot.getValue(Customer::class.java)
                         if (customer != null) {
-                            // Mengisi data ke tampilan
-                            binding.txName.setText(customer.name ?: "N/A")
-                            binding.txTelepon.setText(customer.phone ?: "N/A")
+                            Log.d("EdProfile", "Customer data: $customer")
+                            binding.txName.setText(customer.nama ?: "N/A")
+                            binding.txTelepon.setText(customer.no_telp ?: "N/A")
                             binding.txEmail.setText(customer.email ?: "N/A")
                             binding.txAlamatProf.setText(customer.alamat ?: "N/A")
 
-                            // Set gambar jika ada URL
                             customer.imageUrl?.let {
                                 // Memuat gambar menggunakan Glide
                                 Glide.with(this@Profile)
@@ -64,21 +77,56 @@ class Profile : AppCompatActivity(), View.OnClickListener {
                                     .into(binding.ImgProf)
                             }
 
-                            this@Profile.customer = customer // Menyimpan customer untuk penggunaan di update
-                            break // Ambil satu customer saja
-                        } else {
-                            Log.e("Profile", "Customer data is null")
+                            this@Profile.customer = customer //
                         }
+                    } else {
+                        Toast.makeText(this@Profile, "No customer data found", Toast.LENGTH_SHORT).show()
                     }
-                } else {
-                    Toast.makeText(this@Profile, "No customer data found", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Profile, "Database error: ${error.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@Profile,"Database error: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+        } else {
+            Toast.makeText(this@Profile, "User ID not found", Toast.LENGTH_SHORT).show()
+        }
+
+//        db.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if (snapshot.exists()) {
+//                    for (dataSnapshot in snapshot.children) {
+//                        val customer = dataSnapshot.getValue(Customer::class.java)
+//                        if (customer != null) {
+//                            // Mengisi data ke tampilan
+//                            binding.txName.setText(customer.nama ?: "N/A")
+//                            binding.txTelepon.setText(customer.no_telp ?: "N/A")
+//                            binding.txEmail.setText(customer.email ?: "N/A")
+//                            binding.txAlamatProf.setText(customer.alamat ?: "N/A")
+//
+//                            // Set gambar jika ada URL
+//                            customer.imageUrl?.let {
+//                                // Memuat gambar menggunakan Glide
+//                                Glide.with(this@Profile)
+//                                    .load(it)
+//                                    .into(binding.ImgProf)
+//                            }
+//
+//                            this@Profile.customer = customer // Menyimpan customer untuk penggunaan di update
+//                            break // Ambil satu customer saja
+//                        } else {
+//                            Log.e("Profile", "Customer data is null")
+//                        }
+//                    }
+//                } else {
+//                    Toast.makeText(this@Profile, "No customer data found", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                Toast.makeText(this@Profile, "Database error: ${error.message}", Toast.LENGTH_SHORT).show()
+//            }
+//        })
     }
 
     override fun onClick(view: View?) {
@@ -89,24 +137,20 @@ class Profile : AppCompatActivity(), View.OnClickListener {
             }
             R.id.btnUpdate -> {
                 // Mengupdate data customer
-                customer.name = binding.txName.text.toString()
-                customer.phone = binding.txTelepon.text.toString()
+                customer.nama = binding.txName.text.toString()
+                customer.no_telp = binding.txTelepon.text.toString()
                 customer.email = binding.txEmail.text.toString()
                 customer.alamat = binding.txAlamatProf.text.toString()
 
                 // Pastikan nama tidak kosong
-                if (customer.name!!.isNotBlank()) {
-                    // Menyimpan pembaruan ke Firebase
-                    db.child(customer.name!!).setValue(customer)
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "Data updated successfully", Toast.LENGTH_SHORT).show()
-                            // Jika ada gambar yang di-upload, upload ke Firebase Storage
-                            imageUri?.let { uri -> uploadImageToFirebase(uri) }
-                            finish() // Tutup activity setelah update
-                        }
-                        .addOnFailureListener { e ->
-                            Toast.makeText(this, "Failed to update data: ${e.message}", Toast.LENGTH_SHORT).show()
-                        }
+                if (customer.nama!!.isNotBlank()) {
+                    // Jika ada gambar yang di-upload, upload ke Firebase Storage terlebih dahulu
+                    imageUri?.let {
+                        uploadImageToFirebase(it) // Upload gambar dan simpan semua data
+                    } ?: run {
+                        // Jika tidak ada gambar baru, langsung simpan data lainnya
+                        saveCustomerData() // Panggil fungsi untuk menyimpan semua data
+                    }
                 } else {
                     Toast.makeText(this, "Nama tidak boleh kosong", Toast.LENGTH_SHORT).show()
                 }
@@ -145,8 +189,9 @@ class Profile : AppCompatActivity(), View.OnClickListener {
                     // Mendapatkan URL gambar yang di-upload
                     Log.d("Profile", "Image URL: $uri")
 
-                    // Simpan URL di database
-                    saveImageUrlToDatabase(uri.toString())
+                    // Simpan URL di database bersama dengan data customer lainnya
+                    customer.imageUrl = uri.toString() // Set URL gambar ke objek customer
+                    saveCustomerData() // Panggil fungsi untuk menyimpan semua data customer termasuk gambar
                 }
                 Toast.makeText(this, "Upload successful", Toast.LENGTH_SHORT).show()
             }
@@ -155,14 +200,28 @@ class Profile : AppCompatActivity(), View.OnClickListener {
             }
     }
 
-    private fun saveImageUrlToDatabase(imageUrl: String) {
-        // Menyimpan URL gambar ke dalam database
-        db.child(customer.name ?: "defaultName").child("imageUrl").setValue(imageUrl)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Image URL saved to database", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to save image URL: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+    private fun saveCustomerData() {
+        val sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        val userId = sharedPref.getString("user_id", null)
+
+        Log.d("Profile","$userId")
+
+        if (userId != null) {
+            customer.nama = binding.txName.text.toString()
+            customer.no_telp = binding.txTelepon.text.toString()
+            customer.email = binding.txEmail.text.toString()
+            customer.alamat = binding.txAlamatProf.text.toString()
+            // Simpan semua data customer dengan UID sebagai key di Firebase Database
+            db.child(userId).setValue(customer)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Data updated successfully", Toast.LENGTH_SHORT).show()
+                    finish() // Tutup activity setelah data di-update
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Failed to update data: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            Toast.makeText(this, "User ID not found. Please log in.", Toast.LENGTH_SHORT).show()
+        }
     }
 }

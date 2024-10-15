@@ -17,7 +17,13 @@
         android:theme="@style/Theme.Virnandaelsa_3"
         tools:targetApi="31">
         <activity
+            android:name=".KatalogFragment"
+            android:exported="false" />
+        <activity
             android:name=".KatalogActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,22 +32,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:exported="true" />
-        <activity
             android:name=".MyApplication"
             android:exported="false" />
         <activity android:name=".Profile" />
         <activity
             android:name=".DashboardActivity"
-            android:exported="true" />
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".RegisterActivity"
-            android:exported="false" />
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".lihat_jasa"
+<<<<<<< HEAD
             android:exported="true">
         </activity>
+=======
+            android:exported="true" />
+>>>>>>> c559f21fd352ae79259843ee7f767fc1a87f54d1
         <activity
             android:name=".tambah_transaksi"
             android:exported="true" />

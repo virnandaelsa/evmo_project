@@ -15,6 +15,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
     lateinit var binding: DashboardBinding
     lateinit var edProfile: EdProfile
     lateinit var fragPesanan: fragPesanan
+    lateinit var fragKatalog: KatalogFragment
     lateinit var ft : FragmentTransaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +31,17 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         // Inisialisasi fragment
         edProfile = EdProfile()
         fragPesanan = fragPesanan()
+        fragKatalog = KatalogFragment()
+
+        if (savedInstanceState == null) {
+            ft = supportFragmentManager.beginTransaction()
+            ft.replace(R.id.fragmentLayout, fragKatalog).commit()
+            binding.fragmentLayout.setBackgroundColor(Color.argb(245, 255, 255, 255)) // Mengatur background
+            binding.fragmentLayout.visibility = View.VISIBLE
+
+            // Sinkronkan BottomNavigationView dengan item Home yang aktif
+            binding.bnv1.selectedItemId = R.id.itemHome
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -47,7 +59,12 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
                 binding.fragmentLayout.setBackgroundColor(Color.argb(245, 255, 255, 255)) // Gunakan android.graphics.Color
                 binding.fragmentLayout.visibility = View.VISIBLE
             }
-            R.id.itemHome -> binding.fragmentLayout.visibility = View.GONE
+            R.id.itemHome -> {
+                ft = supportFragmentManager.beginTransaction()
+                ft.replace(R.id.fragmentLayout, fragKatalog).commit()
+                binding.fragmentLayout.setBackgroundColor(Color.argb(245, 255, 255, 255))
+                binding.fragmentLayout.visibility = View.VISIBLE
+            }
         }
         return true // Mengembalikan true untuk menunjukkan bahwa item telah diproses
     }

@@ -1,20 +1,30 @@
 package com.example.virnandaelsa_3
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.virnandaelsa_3.Models.KatalogResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.example.virnandaelsa_3.databinding.ActivityKatalog2Binding
+import com.example.virnandaelsa_3.databinding.ActivityKatalogFragmentBinding
 
-class KatalogActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityKatalog2Binding
+class KatalogFragment : Fragment() {
+    private lateinit var binding: ActivityKatalogFragmentBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityKatalog2Binding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        binding = ActivityKatalogFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         fetchKatalogData()
     }
@@ -29,7 +39,7 @@ class KatalogActivity : AppCompatActivity() {
                     katalogData?.let {
                         val penjualList = it.penjual ?: emptyList()
                         val user = it.user
-                        val adapter = KatalogAdapter(this@KatalogActivity, penjualList, user)
+                        val adapter = KatalogAdapter(requireContext(), penjualList, user)
 
                         binding.listViewJasa.adapter = adapter
                     }
