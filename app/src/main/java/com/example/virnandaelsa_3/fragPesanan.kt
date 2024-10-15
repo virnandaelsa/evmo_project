@@ -8,13 +8,13 @@ import androidx.fragment.app.Fragment
 
 class fragPesanan : Fragment(){
 
-    lateinit var thisParent : lihat_jasa
+    lateinit var thisParent : DashboardActivity
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        thisParent = activity as lihat_jasa
+        thisParent = activity as DashboardActivity
         return inflater.inflate(R.layout.frag_pesanan, container, false)
     }
 }

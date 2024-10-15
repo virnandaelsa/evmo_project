@@ -3,6 +3,7 @@ package com.example.virnandaelsa_3
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -31,9 +32,11 @@ class tambah_transaksi : AppCompatActivity() {
         val productOwner = intent.getStringExtra("PRODUCT_OWNER")
         val productImageUri = intent.getStringExtra("PRODUCT_IMAGE_URI")
 
+//        Log.d("Tambah Transaksi", "$productPrice")
+
         // Tampilkan data di layout menggunakan binding
         binding.txProduk4.text = productTitle
-        binding.txHarga4.text = "Rp $productPrice"
+        binding.txHarga4.text = "$productPrice"
         binding.txToko4.text = productOwner
 
         // Tampilkan gambar produk menggunakan Glide jika ada

@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener
 class EdProfile : Fragment(), View.OnClickListener {
 
     private lateinit var binding: FragEdprofileBinding
-    private lateinit var thisParent: lihat_jasa
+    private lateinit var thisParent: DashboardActivity
     private lateinit var db: DatabaseReference
     private val PICK_IMAGE_REQUEST = 1
     private var imageUri: Uri? = null
@@ -37,7 +37,7 @@ class EdProfile : Fragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        thisParent = requireActivity() as lihat_jasa
+        thisParent = requireActivity() as DashboardActivity
         binding = FragEdprofileBinding.inflate(inflater, container, false)
         return binding.root
     }

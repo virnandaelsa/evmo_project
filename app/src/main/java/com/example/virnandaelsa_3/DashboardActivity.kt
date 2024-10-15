@@ -14,7 +14,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
     // Deklarasi binding
     lateinit var binding: DashboardBinding
     lateinit var edProfile: EdProfile
-    lateinit var fragPesanan: fragPesanan
+    lateinit var fragPesanan: PesananSaya
     lateinit var fragKatalog: KatalogFragment
     lateinit var ft : FragmentTransaction
 
@@ -30,7 +30,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
 
         // Inisialisasi fragment
         edProfile = EdProfile()
-        fragPesanan = fragPesanan()
+        fragPesanan = PesananSaya()
         fragKatalog = KatalogFragment()
 
         if (savedInstanceState == null) {

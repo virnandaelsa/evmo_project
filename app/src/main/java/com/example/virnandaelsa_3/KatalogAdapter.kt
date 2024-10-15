@@ -1,6 +1,7 @@
 package com.example.virnandaelsa_3
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,6 +49,16 @@ class KatalogAdapter(val context: Context, val penjualList: List<Penjual>, val u
             .load(imageUrl)
             .into(binding.imageJasa)
 
+        binding.buttonPesan.setOnClickListener {
+            val intent = Intent(context, tambah_transaksi::class.java).apply {
+                putExtra("SERVICE_ID", penjual.id_katalog.toString())
+                putExtra("PRODUCT_TITLE", penjual.judul)
+                putExtra("PRODUCT_PRICE", "Rp ${detailKatalogItem?.harga.toString()}")
+                putExtra("PRODUCT_OWNER", "$user")
+                putExtra("PRODUCT_IMAGE_URI", "$imageUrl")
+            }
+            context.startActivity(intent)
+        }
         return view
     }
 

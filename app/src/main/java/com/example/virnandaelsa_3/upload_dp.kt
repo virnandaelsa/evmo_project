@@ -48,7 +48,8 @@ class upload_dp : AppCompatActivity() {
 
         // Tampilkan data di layout
         binding.txProduk2.text = productTitle
-        binding.txhargadp.text = "Rp $productPrice"
+        binding.txhargadp.text = "$productPrice"
+        Log.d("Upload DP", "$productPrice")
         binding.txToko2.text = productOwner
         binding.txTgl.text = tanggal
         binding.txket.text = keterangan
@@ -124,7 +125,7 @@ class upload_dp : AppCompatActivity() {
                                 progressDialog.dismiss()
 
                                 // Navigasi ke aktivitas lain jika perlu
-                                startActivity(Intent(this, lihat_jasa::class.java))
+                                startActivity(Intent(this, DashboardActivity::class.java))
                                 finish()
                             }
                             .addOnFailureListener { e ->
