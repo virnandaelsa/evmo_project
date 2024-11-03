@@ -32,7 +32,7 @@ class KatalogActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val katalogData = response.body()?.data
                         katalogData?.let {
-                            val penjualList = it.penjual ?: emptyList()
+                            val penjualList = it.detail_katalog ?: emptyList()
                             val user = it.user
                             val adapter = KatalogAdapter(this@KatalogActivity, penjualList, user)
 

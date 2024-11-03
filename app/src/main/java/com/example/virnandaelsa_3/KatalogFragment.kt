@@ -50,7 +50,7 @@ class KatalogFragment : Fragment() {
                     if (response.isSuccessful) {
                         val katalogData = response.body()?.data
                         katalogData?.let {
-                            val penjualList = it.penjual ?: emptyList()
+                            val penjualList = it.detail_katalog ?: emptyList()
                             val user = it.user
                             val adapter = KatalogAdapter(requireContext(), penjualList, user)
 
