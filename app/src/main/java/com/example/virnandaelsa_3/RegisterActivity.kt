@@ -67,7 +67,7 @@ class RegisterActivity: AppCompatActivity() {
                 return@setOnClickListener
             }
 
-//            registerUserMySQL(nama, email, alamat, no_telp, username, password)
+            registerUserMySQL(nama, email, alamat, no_telp, username, password)
             registerUserFirebase(nama, email, alamat, no_telp, username, password)
         }
     }

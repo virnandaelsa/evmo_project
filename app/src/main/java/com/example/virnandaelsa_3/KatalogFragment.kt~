@@ -54,7 +54,7 @@ class KatalogFragment : Fragment() {
                             val user = it.user
                             val adapter = KatalogAdapter(requireContext(), penjualList, user)
 
-                            Log.d("Katalog Fragment", "Penjual List: $penjualList")
+                            Log.d("Katalog Fragment", "User: $user")
 
                             // Set adapter untuk listView di Fragment
                             binding.listViewJasa.adapter = adapter

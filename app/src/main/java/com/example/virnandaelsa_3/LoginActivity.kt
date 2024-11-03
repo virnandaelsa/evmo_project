@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-//            loginUserMySQL(username, password)
+            loginUserMySQL(username, password)
             loginUserFirebase(username, password)
         }
 
@@ -65,6 +65,15 @@ class LoginActivity : AppCompatActivity() {
                     val loginResponse = response.body()
                     if (loginResponse != null && loginResponse.status == true) {
                         Log.d("LoginActivity", "Login berhasil")
+
+                        val token = loginResponse.token
+
+                        Log.d("LoginActivity", "Token: $token")
+
+                        val sharedPreferences = getSharedPreferences("token", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putString("auth_token", token)
+                        editor.apply()
                     } else {
                         Log.d("LoginActivity", "Login gagal")
                     }
