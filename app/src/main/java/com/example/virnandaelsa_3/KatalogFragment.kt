@@ -1,15 +1,18 @@
 package com.example.virnandaelsa_3
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.virnandaelsa_3.Models.KatalogResponse
+import com.example.virnandaelsa_3.databinding.ActivityKatalogFragmentBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.example.virnandaelsa_3.databinding.ActivityKatalogFragmentBinding
 
 class KatalogFragment : Fragment() {
     private lateinit var binding: ActivityKatalogFragmentBinding
@@ -17,7 +20,7 @@ class KatalogFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = ActivityKatalogFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -64,6 +67,7 @@ class KatalogFragment : Fragment() {
             .commit()
     }
 
+<<<<<<< HEAD
     fun fetchKatalogData() {
         val token = "Bearer 10|hNgLQRQ3z1oun5ZF12XfHnLdzGD5cIXMop96kgIq5e083157"
         val call = ApiClient.apiService.getKatalog(token)
@@ -75,15 +79,46 @@ class KatalogFragment : Fragment() {
                         val penjualList = it.penjual ?: emptyList()
                         val user = it.user
                         val adapter = KatalogAdapter(requireContext(), penjualList, user)
+=======
+    private fun fetchKatalogData() {
+        // Ambil token dari SharedPreferences
+        val sharedPreferences = requireContext().getSharedPreferences("token", Context.MODE_PRIVATE)
+        val token = sharedPreferences.getString("auth_token", null)
+>>>>>>> c07eed83b85226d2ac4fd7b36f0f6efa06576c44
 
-                        binding.listViewJasa.adapter = adapter
+        Log.d("Katalog Fragment", "Token: $token")
+
+        if (token != null) {
+            val authToken = "Bearer $token"
+            val call = ApiClient.apiService.getKatalog(authToken)
+
+            //Log.d("Katalog Fragment", "Call: $call")
+
+            call.enqueue(object : Callback<KatalogResponse> {
+                override fun onResponse(call: Call<KatalogResponse>, response: Response<KatalogResponse>) {
+                    if (response.isSuccessful) {
+                        val katalogData = response.body()?.data
+                        katalogData?.let {
+                            val penjualList = it.detail_katalog ?: emptyList()
+                            val user = it.user
+                            val adapter = KatalogAdapter(requireContext(), penjualList, user)
+
+                            Log.d("Katalog Fragment", "Penjual List: $penjualList")
+
+                            // Set adapter untuk listView di Fragment
+                            binding.listViewJasa.adapter = adapter
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), "Gagal memuat katalog", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<KatalogResponse>, t: Throwable) {
-
-            }
-        })
+                override fun onFailure(call: Call<KatalogResponse>, t: Throwable) {
+                    Toast.makeText(requireContext(), "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+        } else {
+            Toast.makeText(requireContext(), "Token tidak ditemukan", Toast.LENGTH_SHORT).show()
+        }
     }
 }

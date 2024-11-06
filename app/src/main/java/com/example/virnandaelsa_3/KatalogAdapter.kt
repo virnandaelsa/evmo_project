@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.bumptech.glide.Glide
+import com.example.virnandaelsa_3.Models.DetailKatalog
 import com.example.virnandaelsa_3.Models.Penjual
 import com.example.virnandaelsa_3.databinding.ItemJasaBinding
 
-class KatalogAdapter(val context: Context, val penjualList: List<Penjual>, val user: String) : BaseAdapter() {
+class KatalogAdapter(val context: Context, val penjualList: List<DetailKatalog>, val user: String) : BaseAdapter() {
 
     override fun getCount(): Int {
         return penjualList.size
@@ -37,7 +38,7 @@ class KatalogAdapter(val context: Context, val penjualList: List<Penjual>, val u
             view = p1
         }
 
-        val penjual = getItem(p0) as Penjual
+        val penjual = getItem(p0) as DetailKatalog
         val detailKatalogItem = penjual.detail_katalog.firstOrNull()
         val baseUrl = "http://10.0.2.2:8000/images/gambar_detail_katalog/"
         val imageUrl = detailKatalogItem?.gambar?.let { baseUrl + it }

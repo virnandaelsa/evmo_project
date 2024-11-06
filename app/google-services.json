@@ -1,14 +1,56 @@
 {
   "project_info": {
-    "project_number": "27443646098",
-    "firebase_url": "https://latihan-1-a1ea0-default-rtdb.firebaseio.com",
-    "project_id": "latihan-1-a1ea0",
-    "storage_bucket": "latihan-1-a1ea0.appspot.com"
+    "project_number": "331039977980",
+    "firebase_url": "https://pemrogramanmobile-dwinarwastu-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "pemrogramanmobile-dwinarwastu",
+    "storage_bucket": "pemrogramanmobile-dwinarwastu.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:27443646098:android:1099d1e6bc29073b1e604b",
+        "mobilesdk_app_id": "1:331039977980:android:151d282d3490a46d5b0279",
+        "android_client_info": {
+<<<<<<< HEAD
+          "package_name": "com.example.virnandaelsa_3"
+=======
+          "package_name": "com.example.firebasestorage"
+>>>>>>> c07eed83b85226d2ac4fd7b36f0f6efa06576c44
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACYw89bUDPqc6yWmmnUD6zCfvwQvlzXp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331039977980:android:5ddbdd6826ecf26e5b0279",
+        "android_client_info": {
+          "package_name": "com.example.pemrogramanmobilefirebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACYw89bUDPqc6yWmmnUD6zCfvwQvlzXp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331039977980:android:0028148e8958664c5b0279",
         "android_client_info": {
           "package_name": "com.example.virnandaelsa_3"
         }
@@ -16,45 +58,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyApm6dJWm3x_ExTCb43A00EtVZNDEAZ60s"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:27443646098:android:44db000649f6a7d01e604b",
-        "android_client_info": {
-          "package_name": "com.example.app01"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyApm6dJWm3x_ExTCb43A00EtVZNDEAZ60s"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:27443646098:android:d7d5318cf4dddef81e604b",
-        "android_client_info": {
-          "package_name": "com.example.app02"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyApm6dJWm3x_ExTCb43A00EtVZNDEAZ60s"
+          "current_key": "AIzaSyACYw89bUDPqc6yWmmnUD6zCfvwQvlzXp8"
         }
       ],
       "services": {
