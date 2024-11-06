@@ -7,7 +7,7 @@ import android.view.View
 import androidx.fragment.app.FragmentTransaction
 import com.example.virnandaelsa_3.databinding.DashboardBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import android.graphics.Color // Perbaikan import Color
+import android.graphics.Color
 
 class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -16,6 +16,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
     lateinit var edProfile: EdProfile
     lateinit var fragPesanan: PesananSaya
     lateinit var fragKatalog: KatalogFragment
+    lateinit var fragWebView: FragmentWebView // Deklarasi fragWebView
     lateinit var ft : FragmentTransaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +33,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         edProfile = EdProfile()
         fragPesanan = PesananSaya()
         fragKatalog = KatalogFragment()
+        fragWebView = FragmentWebView() // Inisialisasi fragWebView
 
         if (savedInstanceState == null) {
             ft = supportFragmentManager.beginTransaction()
@@ -50,13 +52,13 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
             R.id.itemLaporan -> {
                 ft = supportFragmentManager.beginTransaction()
                 ft.replace(R.id.fragmentLayout, fragPesanan).commit()
-                binding.fragmentLayout.setBackgroundColor(Color.argb(245, 255, 255, 255)) // Gunakan android.graphics.Color
+                binding.fragmentLayout.setBackgroundColor(Color.argb(245, 255, 255, 255))
                 binding.fragmentLayout.visibility = View.VISIBLE
             }
             R.id.itemUser -> {
                 ft = supportFragmentManager.beginTransaction()
                 ft.replace(R.id.fragmentLayout, edProfile).commit()
-                binding.fragmentLayout.setBackgroundColor(Color.argb(245, 255, 255, 255)) // Gunakan android.graphics.Color
+                binding.fragmentLayout.setBackgroundColor(Color.argb(245, 255, 255, 255))
                 binding.fragmentLayout.visibility = View.VISIBLE
             }
             R.id.itemHome -> {
@@ -66,6 +68,6 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
                 binding.fragmentLayout.visibility = View.VISIBLE
             }
         }
-        return true // Mengembalikan true untuk menunjukkan bahwa item telah diproses
+        return true
     }
 }

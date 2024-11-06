@@ -180,7 +180,7 @@
         android:layout_width="415dp"
         android:layout_height="903dp"
         android:layout_below="@id/btnBkProfile"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 

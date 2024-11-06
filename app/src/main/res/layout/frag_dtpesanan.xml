@@ -210,8 +210,8 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView51"
-        app:srcCompat="@color/material_dynamic_neutral70"
-        tools:srcCompat="@color/material_dynamic_neutral_variant70" />
+        app:srcCompat="@color/hai"
+        tools:srcCompat="@color/hai" />
 
     <TextView
         android:id="@+id/textView53"

@@ -24,6 +24,16 @@ class upload_dp : AppCompatActivity() {
     private var selectedImageUri: Uri? = null
     private lateinit var progressDialog: ProgressDialog
 
+    // Variabel untuk menerima data dari notifikasi
+    private var transactionId: String? = null
+    private var productTitle: String? = null
+    private var productPrice: String? = null
+    private var productOwner: String? = null
+    private var productImageUri: String? = null
+    private var tanggal: String? = null
+    private var keterangan: String? = null
+    private var alamat: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,25 +45,23 @@ class upload_dp : AppCompatActivity() {
         storageRef = FirebaseStorage.getInstance().reference
         database = FirebaseDatabase.getInstance().getReference("Transaksi")
 
-        // Ambil data yang dikirim dari tambah_transaksi
-        val serviceId = intent.getStringExtra("SERVICE_ID")
-        val productTitle = intent.getStringExtra("PRODUCT_TITLE")
-        val productPrice = intent.getStringExtra("PRODUCT_PRICE")
-        val productOwner = intent.getStringExtra("PRODUCT_OWNER")
-        val productImageUri = intent.getStringExtra("PRODUCT_IMAGE_URI")
-        val tanggal = intent.getStringExtra("TANGGAL")
-        val keterangan = intent.getStringExtra("KETERANGAN")
-        val alamat = intent.getStringExtra("ALAMAT")
-        val transactionId = intent.getStringExtra("TRANSACTION_ID") // Ambil transactionId
+        // Ambil data yang dikirim dari FirebaseMessage jika ada
+        transactionId = intent.getStringExtra("transactionId")
+        productTitle = intent.getStringExtra("promo")
+        productPrice = intent.getStringExtra("promoUntil") // Ubah sesuai kebutuhan
+        productOwner = intent.getStringExtra("PRODUCT_OWNER") // Misalnya ambil dari notifikasi
+        productImageUri = intent.getStringExtra("PRODUCT_IMAGE_URI")
+        tanggal = intent.getStringExtra("TANGGAL")
+        keterangan = intent.getStringExtra("KETERANGAN")
+        alamat = intent.getStringExtra("ALAMAT")
 
         // Tampilkan data di layout
-        binding.txProduk2.text = productTitle
-        binding.txhargadp.text = "$productPrice"
-        Log.d("Upload DP", "$productPrice")
-        binding.txToko2.text = productOwner
-        binding.txTgl.text = tanggal
-        binding.txket.text = keterangan
-        binding.txalamat.text = alamat
+        binding.txProduk2.text = productTitle ?: "Tidak ada judul"
+        binding.txhargadp.text = productPrice ?: "Tidak ada harga"
+        binding.txToko2.text = productOwner ?: "Tidak ada pemilik"
+        binding.txTgl.text = tanggal ?: "Tidak ada tanggal"
+        binding.txket.text = keterangan ?: "Tidak ada keterangan"
+        binding.txalamat.text = alamat ?: "Tidak ada alamat"
 
         // Tampilkan gambar produk menggunakan Glide jika ada
         if (productImageUri != null) {

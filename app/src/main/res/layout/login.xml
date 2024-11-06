@@ -72,7 +72,8 @@
             android:id="@+id/edPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password" />
+            android:hint="Password"
+            android:inputType="text|textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

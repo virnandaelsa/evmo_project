@@ -50,7 +50,8 @@ class EdProfile : Fragment(), View.OnClickListener {
 
         // Listener untuk tombol
         binding.btnUpdate.setOnClickListener(this)
-        binding.ImgProfed.setOnClickListener(this) // Set click listener untuk ImageView
+        binding.ImgProfed.setOnClickListener(this)
+        binding.btnKeluar.setOnClickListener(this)// Set click listener untuk ImageView
 
         loadCustomerData()
     }

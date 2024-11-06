@@ -111,7 +111,7 @@ class tambah_transaksi : AppCompatActivity() {
                 val intent = Intent(this, upload_dp::class.java).apply {
                     putExtra("SERVICE_ID", serviceId)
                     putExtra("PRODUCT_TITLE", productTitle)
-                    putExtra("PRODUCT_PRICE", productPrice)
+                    putExtra("PRODUCT_PRICE", productPrice.toString())
                     putExtra("PRODUCT_OWNER", productOwner)
                     putExtra("PRODUCT_IMAGE_URI", imageUrl) // Kirim dpUri ke upload_dp
                     putExtra("TANGGAL", tanggal)
