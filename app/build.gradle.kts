@@ -57,6 +57,7 @@ dependencies {
     implementation("androidx.activity:activity:1.9.2")
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation("com.google.android.gms:play-services-maps:19.0.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
 
     testImplementation("junit:junit:4.13.2")

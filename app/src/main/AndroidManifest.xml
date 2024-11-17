@@ -5,10 +5,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/icon"
@@ -17,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Virnandaelsa_3"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBa5c8uP7og46RdykvwKmj82_t45yHru0w" />
         <activity
             android:name=".KatalogFragment"
             android:exported="false" />
@@ -65,6 +70,10 @@
         </activity>
         <activity
             android:name=".DetailPesanan"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".Maps"
             android:exported="true">
         </activity>
     </application>

@@ -10,11 +10,8 @@
       "client_info": {
         "mobilesdk_app_id": "1:331039977980:android:151d282d3490a46d5b0279",
         "android_client_info": {
-<<<<<<< HEAD
-          "package_name": "com.example.virnandaelsa_3"
-=======
+          "package_name": "com.example.virnandaelsa_3",
           "package_name": "com.example.firebasestorage"
->>>>>>> c07eed83b85226d2ac4fd7b36f0f6efa06576c44
         }
       },
       "oauth_client": [],
