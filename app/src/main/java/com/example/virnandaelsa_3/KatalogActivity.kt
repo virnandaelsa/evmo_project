@@ -34,9 +34,9 @@ class KatalogActivity : AppCompatActivity() {
                         katalogData?.let {
                             val penjualList = it.detail_katalog ?: emptyList()
                             val user = it.user
-                            val adapter = KatalogAdapter(this@KatalogActivity, penjualList, user)
 
-                            binding.listViewJasa.adapter = adapter
+                            //val adapter = KatalogAdapter(this@KatalogActivity, penjualList, user)
+                            //binding.listViewJasa.adapter = adapter
                         }
                     }
                 }

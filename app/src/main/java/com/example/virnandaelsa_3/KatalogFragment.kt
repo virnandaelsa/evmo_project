@@ -76,21 +76,28 @@ class KatalogFragment : Fragment() {
                 override fun onResponse(call: Call<KatalogResponse>, response: Response<KatalogResponse>) {
                     if (response.isSuccessful) {
                         val katalogData = response.body()?.data
-                        katalogData?.let {
-                            val penjualList = it.detail_katalog ?: emptyList()
-                            val user = it.user
+                        if (katalogData != null) {
+                            val penjualList = katalogData.detail_katalog ?: emptyList()
+                            val user = katalogData.nama_toko
+
+                            Log.d("KatalogFragment", "Penjual List: $penjualList")
+                            Log.d("KatalogFragment", "User: $user")
+
                             val adapter = KatalogAdapter(requireContext(), penjualList, user)
-
-                            Log.d("Katalog Fragment", "Penjual List: $penjualList")
-
                             binding.listViewJasa.adapter = adapter
+                        } else {
+                            Toast.makeText(requireContext(), "Data katalog kosong", Toast.LENGTH_SHORT).show()
                         }
                     } else {
-                        Toast.makeText(requireContext(), "Gagal memuat katalog", Toast.LENGTH_SHORT).show()
+                        // Log the error message from the server
+                        val errorMessage = response.errorBody()?.string() ?: "Unknown error"
+                        Log.e("KatalogFragment", "Server error: $errorMessage")
+                        Toast.makeText(requireContext(), "Gagal memuat katalog: $errorMessage", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<KatalogResponse>, t: Throwable) {
+                    Log.e("KatalogFragment", "Network error: ${t.message}")
                     Toast.makeText(requireContext(), "Error: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
             })
