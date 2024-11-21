@@ -7,19 +7,6 @@
     android:background="#FFFFFF"
     android:backgroundTint="#FFFFFF">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="220dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/wisma"
-        tools:srcCompat="@drawable/wisma" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
         android:layout_width="300dp"
@@ -32,12 +19,13 @@
         app:boxStrokeColor="#00000F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toBottomOf="@+id/textView17">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtNama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#E8E8E8"
             android:hint="Nama" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -46,9 +34,10 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="55dp"
         android:textColorHint="#00000F"
+        app:boxBackgroundColor="#FFFFFF"
         app:boxStrokeColor="#00000F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,6 +47,7 @@
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#E8E8E8"
             android:hint="Email"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -67,9 +57,10 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="55dp"
         android:textColorHint="#00000F"
+        app:boxBackgroundColor="#FFFFFF"
         app:boxStrokeColor="#00000F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,6 +70,7 @@
             android:id="@+id/edtAlamat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#E8E8E8"
             android:hint="Alamat" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,9 +79,10 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="55dp"
         android:textColorHint="#00000F"
+        app:boxBackgroundColor="#FFFFFF"
         app:boxStrokeColor="#00000F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,6 +92,7 @@
             android:id="@+id/edtNoTelp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#E8E8E8"
             android:hint="No. Telepon" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,9 +101,10 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="55dp"
         android:textColorHint="#00000F"
+        app:boxBackgroundColor="#FFFFFF"
         app:boxStrokeColor="#00000F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -119,6 +114,7 @@
             android:id="@+id/edtUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#E8E8E8"
             android:hint="Username" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,9 +123,10 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="55dp"
         android:textColorHint="#00000F"
+        app:boxBackgroundColor="#FFFFFF"
         app:boxStrokeColor="#00000F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -139,35 +136,35 @@
             android:id="@+id/edtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#E8E8E8"
             android:hint="Password"
             android:inputType="text|textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnSignUp"
-        android:layout_width="180dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="120dp"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="50dp"
         android:backgroundTint="#385A7F"
         android:text="SIGN UP"
         android:textSize="16sp"
         android:textStyle="bold"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout8" />
 
     <Button
         android:id="@+id/button6"
-        android:layout_width="180dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="115dp"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="115dp"
-        android:backgroundTint="#385A7E"
+        android:layout_marginEnd="50dp"
+        android:backgroundTint="#FF0000"
         android:text="CANCEL"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -175,4 +172,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="189dp"
+        android:text="Registration"
+        android:textColor="#385A7E"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="96dp"
+        android:text="Please complete your information to\nproceed with the registration."
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
 </androidx.constraintlayout.widget.ConstraintLayout>
