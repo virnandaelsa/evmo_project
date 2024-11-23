@@ -45,7 +45,7 @@ class KatalogAdapter(val context: Context, val penjualList: List<DetailKatalog>,
 
         val penjual = getItem(p0) as DetailKatalog
         val detailKatalogItem = penjual.detail_katalog.firstOrNull()
-        val baseUrl = "http://192.168.18.63:8000/images/gambar_detail_katalog/"
+        val baseUrl = "http://192.168.219.136:8000/images/gambar_detail_katalog/"
         val imageUrl = detailKatalogItem?.gambar?.let { baseUrl + it }
 
         binding.txJudul.text = penjual.judul
