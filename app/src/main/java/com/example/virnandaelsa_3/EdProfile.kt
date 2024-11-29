@@ -73,7 +73,11 @@ class EdProfile : Fragment(), View.OnClickListener {
                             binding.txNama1.setText(customer.nama ?: "N/A")
                             binding.txNama.setText(customer.nama ?: "N/A")
                             binding.txNomor.setText(customer.no_telp ?: "N/A")
-                            binding.txGmail.setText(customer.email ?: "N/A")
+                            val decryptedEmail = customer.email?.let {
+                                EncryptionUtils.decrypt(it)
+                            }
+
+                            binding.txGmail.setText(decryptedEmail ?: "N/A")
                             binding.txAlamat1.setText(customer.alamat ?: "N/A")
 
                             // Set gambar jika ada URL

@@ -43,9 +43,6 @@ class Profile : AppCompatActivity(), View.OnClickListener {
         db = FirebaseDatabase.getInstance().getReference("users")
 
 
-
-
-
         // Load data pelanggan
         loadCustomerData()
     }
@@ -67,7 +64,13 @@ class Profile : AppCompatActivity(), View.OnClickListener {
                             Log.d("EdProfile", "Customer data: $customer")
                             binding.txName.setText(customer.nama ?: "N/A")
                             binding.txTelepon.setText(customer.no_telp ?: "N/A")
-                            binding.txEmail.setText(customer.email ?: "N/A")
+
+                            // Decrypt email before setting it
+                            val decryptedEmail = customer.email?.let {
+                                EncryptionUtils.decrypt(it) // Assuming EncryptionUtils.decrypt() is your decryption function
+                            }
+
+                            binding.txEmail.setText(decryptedEmail ?: "N/A")
                             binding.txAlamatProf.setText(customer.alamat ?: "N/A")
 
                             customer.imageUrl?.let {
@@ -77,15 +80,20 @@ class Profile : AppCompatActivity(), View.OnClickListener {
                                     .into(binding.ImgProf)
                             }
 
-                            this@Profile.customer = customer //
+                            this@Profile.customer = customer // Store the customer object if needed
                         }
                     } else {
-                        Toast.makeText(this@Profile, "No customer data found", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@Profile, "No customer data found", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(this@Profile,"Database error: ${error.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@Profile,
+                        "Database error: ${error.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             })
         } else {
@@ -135,11 +143,14 @@ class Profile : AppCompatActivity(), View.OnClickListener {
                 // Kembali ke DashboardActivity
                 finish() // Menutup Profile dan kembali ke Dashboard
             }
+
             R.id.btnUpdate -> {
                 // Mengupdate data customer
                 customer.nama = binding.txName.text.toString()
                 customer.no_telp = binding.txTelepon.text.toString()
-                customer.email = binding.txEmail.text.toString()
+                val encryptedEmail =
+                    EncryptionUtils.encrypt(binding.txEmail.text.toString()) // Encrypt email before saving
+                customer.email = encryptedEmail
                 customer.alamat = binding.txAlamatProf.text.toString()
 
                 // Pastikan nama tidak kosong
@@ -179,7 +190,8 @@ class Profile : AppCompatActivity(), View.OnClickListener {
 
     private fun uploadImageToFirebase(imageUri: Uri) {
         // Buat referensi ke Firebase Storage
-        val storageReference = FirebaseStorage.getInstance().reference.child("profileImages/${System.currentTimeMillis()}.jpg")
+        val storageReference =
+            FirebaseStorage.getInstance().reference.child("profileImages/${System.currentTimeMillis()}.jpg")
 
         // Meng-upload gambar
         storageReference.putFile(imageUri)
@@ -204,21 +216,28 @@ class Profile : AppCompatActivity(), View.OnClickListener {
         val sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
         val userId = sharedPref.getString("user_id", null)
 
-        Log.d("Profile","$userId")
+        Log.d("Profile", "$userId")
 
         if (userId != null) {
             customer.nama = binding.txName.text.toString()
             customer.no_telp = binding.txTelepon.text.toString()
-            customer.email = binding.txEmail.text.toString()
+
+            // Encrypt the email before saving it
+            val encryptedEmail =
+                EncryptionUtils.encrypt(binding.txEmail.text.toString()) // Encrypt email before saving
+            customer.email = encryptedEmail // Store the encrypted email
+
             customer.alamat = binding.txAlamatProf.text.toString()
-            // Simpan semua data customer dengan UID sebagai key di Firebase Database
+
+            // Save all customer data with UID as key in Firebase Database
             db.child(userId).setValue(customer)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Data updated successfully", Toast.LENGTH_SHORT).show()
-                    finish() // Tutup activity setelah data di-update
+                    finish() // Close the activity after data is updated
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to update data: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Failed to update data: ${e.message}", Toast.LENGTH_SHORT)
+                        .show()
                 }
         } else {
             Toast.makeText(this, "User ID not found. Please log in.", Toast.LENGTH_SHORT).show()

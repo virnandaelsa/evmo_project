@@ -98,9 +98,13 @@ class LoginActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     // Mengambil data pengguna
                     for (snapshot in dataSnapshot.children) {
-                        val email = snapshot.child("email").getValue(String::class.java)
-                        if (email != null) {
-                            loginUserWithEmailAndPassword(email, password)
+                        val encryptedEmail = snapshot.child("email").getValue(String::class.java)
+                        if (encryptedEmail != null) {
+                            // Dekripsi email yang terenkripsi
+                            val decryptedEmail = EncryptionUtils.decrypt(encryptedEmail)  // Menggunakan metode dekripsi
+
+                            // Login menggunakan email yang sudah didekripsi
+                            loginUserWithEmailAndPassword(decryptedEmail, password)
                         }
                     }
                 } else {
@@ -118,21 +122,25 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    // Tidak ada kunci enkripsi yang perlu disimpan
+
                     val userId = auth.currentUser?.uid
                     val sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
                     with(sharedPref.edit()) {
                         putString("user_id", userId)
                         apply()
                     }
+
                     Toast.makeText(this, "Login berhasil Firebase!", Toast.LENGTH_SHORT).show()
+
                     // Redirect ke halaman utama
                     val intent = Intent(this, DashboardActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
                     Toast.makeText(this, "Login gagal: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("LoginActivity", "Login gagal: ${task.exception?.message}")
                 }
             }
     }
-
 }

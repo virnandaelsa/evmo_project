@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.bumptech.glide.Glide
 import com.example.virnandaelsa_3.Models.DetailKatalog
-import com.example.virnandaelsa_3.Models.Penjual
+import com.example.virnandaelsa_3.Models.User
 import com.example.virnandaelsa_3.databinding.ItemJasaBinding
 
 class KatalogAdapter(val context: Context, val penjualList: List<DetailKatalog>, val user: String) : BaseAdapter() {
@@ -45,12 +45,13 @@ class KatalogAdapter(val context: Context, val penjualList: List<DetailKatalog>,
 
         val penjual = getItem(p0) as DetailKatalog
         val detailKatalogItem = penjual.detail_katalog.firstOrNull()
-        val baseUrl = "http://192.168.219.136:8000/images/gambar_detail_katalog/"
+        val baseUrl = "http://192.168.0.62:8000/images/gambar_detail_katalog/"
+
         val imageUrl = detailKatalogItem?.gambar?.let { baseUrl + it }
 
         binding.txJudul.text = penjual.judul
-        binding.txHarga.text = "Rp ${detailKatalogItem?.harga}"
-        binding.txNamapj.text = "$user"
+        binding.txHarga.text = detailKatalogItem?.harga?.let { "Rp $it" } ?: "Harga tidak tersedia"
+        binding.txNamapj.text = user
         Glide.with(context)
             .load(imageUrl)
             .into(binding.imageJasa)
@@ -59,9 +60,9 @@ class KatalogAdapter(val context: Context, val penjualList: List<DetailKatalog>,
             val intent = Intent(context, tambah_transaksi::class.java).apply {
                 putExtra("SERVICE_ID", penjual.id_katalog.toString())
                 putExtra("PRODUCT_TITLE", penjual.judul)
-                putExtra("PRODUCT_PRICE", "Rp ${detailKatalogItem?.harga.toString()}")
-                putExtra("PRODUCT_OWNER", "$user")
-                putExtra("PRODUCT_IMAGE_URI", "$imageUrl")
+                putExtra("PRODUCT_PRICE", "Rp ${detailKatalogItem?.harga ?: "0"}")
+                putExtra("PRODUCT_OWNER", user)
+                putExtra("PRODUCT_IMAGE_URI", imageUrl ?: "")
             }
             context.startActivity(intent)
         }

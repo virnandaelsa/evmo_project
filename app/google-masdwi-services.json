@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "331039977980",
+    "firebase_url": "https://pemrogramanmobile-dwinarwastu-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "pemrogramanmobile-dwinarwastu",
+    "storage_bucket": "pemrogramanmobile-dwinarwastu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331039977980:android:151d282d3490a46d5b0279",
+        "android_client_info": {
+          "package_name": "com.example.virnandaelsa_3",
+          "package_name": "com.example.firebasestorage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACYw89bUDPqc6yWmmnUD6zCfvwQvlzXp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331039977980:android:5ddbdd6826ecf26e5b0279",
+        "android_client_info": {
+          "package_name": "com.example.pemrogramanmobilefirebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACYw89bUDPqc6yWmmnUD6zCfvwQvlzXp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331039977980:android:0028148e8958664c5b0279",
+        "android_client_info": {
+          "package_name": "com.example.virnandaelsa_3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACYw89bUDPqc6yWmmnUD6zCfvwQvlzXp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

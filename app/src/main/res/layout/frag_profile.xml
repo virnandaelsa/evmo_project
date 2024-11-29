@@ -3,15 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/setengah"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="110dp"
         android:layout_height="50dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="-25dp"
         android:layout_marginTop="15dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnBkProfile"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/wisma"
         tools:src="@drawable/wisma"
@@ -22,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="25dp"
         android:text="Profile Saya"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -34,7 +44,7 @@
         android:layout_width="100dp"
         android:layout_height="90dp"
         android:layout_marginStart="155dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="120dp"
         android:layout_marginEnd="156dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="39dp"
-        android:layout_marginTop="175dp"
+        android:layout_marginTop="185dp"
         android:text="Nama"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -56,11 +66,11 @@
 
     <EditText
         android:id="@+id/txName"
-        android:layout_width="250dp"
+        android:layout_width="265dp"
         android:layout_height="40dp"
-        android:layout_marginStart="65dp"
+        android:layout_marginStart="61dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="96dp"
+        android:layout_marginEnd="83dp"
         android:ems="10"
         android:hint="nama"
         android:inputType="text"
@@ -83,11 +93,11 @@
 
     <EditText
         android:id="@+id/txTelepon"
-        android:layout_width="250dp"
+        android:layout_width="265dp"
         android:layout_height="40dp"
-        android:layout_marginStart="65dp"
+        android:layout_marginStart="61dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="96dp"
+        android:layout_marginEnd="83dp"
         android:ems="10"
         android:hint="nomor telepon"
         android:inputType="text"
@@ -109,11 +119,11 @@
 
     <EditText
         android:id="@+id/txEmail"
-        android:layout_width="250dp"
+        android:layout_width="265dp"
         android:layout_height="40dp"
-        android:layout_marginStart="65dp"
+        android:layout_marginStart="61dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="96dp"
+        android:layout_marginEnd="83dp"
         android:ems="10"
         android:hint="gmail"
         android:inputType="text"
@@ -135,11 +145,11 @@
 
     <EditText
         android:id="@+id/txAlamatProf"
-        android:layout_width="250dp"
+        android:layout_width="265dp"
         android:layout_height="40dp"
-        android:layout_marginStart="65dp"
+        android:layout_marginStart="61dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="96dp"
+        android:layout_marginEnd="83dp"
         android:ems="10"
         android:hint="alamat"
         android:inputType="text"
@@ -152,9 +162,9 @@
         android:layout_width="280dp"
         android:layout_height="45dp"
         android:layout_marginStart="56dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="57dp"
-        android:backgroundTint="#385A7F"
+        android:backgroundTint="#28A745"
         android:text="SIMPAN"
         android:textStyle="bold"
         app:cornerRadius="10dp"
@@ -166,9 +176,10 @@
         android:id="@+id/btnBkProfile"
         android:layout_width="70dp"
         android:layout_height="30dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="#FDF6FE"
+        android:layout_marginStart="-10dp"
+        android:layout_marginTop="-40dp"
+        android:background="@null"
+        android:backgroundTint="@android:color/transparent"
         app:icon="@drawable/back"
         app:iconSize="35dp"
         app:iconTint="#385A7E"
@@ -180,9 +191,10 @@
         android:layout_width="415dp"
         android:layout_height="903dp"
         android:layout_below="@id/btnBkProfile"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
     </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
