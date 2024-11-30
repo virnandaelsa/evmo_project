@@ -8,15 +8,10 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.bumptech.glide.Glide
 import com.example.virnandaelsa_3.databinding.FragProfileBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 
 class Profile : AppCompatActivity(), View.OnClickListener {
@@ -42,13 +37,11 @@ class Profile : AppCompatActivity(), View.OnClickListener {
         // Menginisialisasi Firebase Database
         db = FirebaseDatabase.getInstance().getReference("users")
 
-
         // Load data pelanggan
         loadCustomerData()
     }
 
     private fun loadCustomerData() {
-
         val sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
         val userId = sharedPref.getString("user_id", null)
 
@@ -63,14 +56,15 @@ class Profile : AppCompatActivity(), View.OnClickListener {
                         if (customer != null) {
                             Log.d("EdProfile", "Customer data: $customer")
                             binding.txName.setText(customer.nama ?: "N/A")
-                            binding.txTelepon.setText(customer.no_telp ?: "N/A")
 
-                            // Decrypt email before setting it
-                            val decryptedEmail = customer.email?.let {
-                                EncryptionUtils.decrypt(it) // Assuming EncryptionUtils.decrypt() is your decryption function
+                            // Dekripsi nomor telepon yang disimpan terenkripsi di Firebase
+                            val decryptedPhone = customer.no_telp?.let {
+                                EncryptionUtils.decrypt(it) // Decrypt phone number
                             }
+                            binding.txTelepon.setText(decryptedPhone ?: "N/A")
 
-                            binding.txEmail.setText(decryptedEmail ?: "N/A")
+                            // Email tidak didekripsi, langsung ditampilkan
+                            binding.txEmail.setText(customer.email ?: "N/A")
                             binding.txAlamatProf.setText(customer.alamat ?: "N/A")
 
                             customer.imageUrl?.let {
@@ -99,42 +93,6 @@ class Profile : AppCompatActivity(), View.OnClickListener {
         } else {
             Toast.makeText(this@Profile, "User ID not found", Toast.LENGTH_SHORT).show()
         }
-
-//        db.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                if (snapshot.exists()) {
-//                    for (dataSnapshot in snapshot.children) {
-//                        val customer = dataSnapshot.getValue(Customer::class.java)
-//                        if (customer != null) {
-//                            // Mengisi data ke tampilan
-//                            binding.txName.setText(customer.nama ?: "N/A")
-//                            binding.txTelepon.setText(customer.no_telp ?: "N/A")
-//                            binding.txEmail.setText(customer.email ?: "N/A")
-//                            binding.txAlamatProf.setText(customer.alamat ?: "N/A")
-//
-//                            // Set gambar jika ada URL
-//                            customer.imageUrl?.let {
-//                                // Memuat gambar menggunakan Glide
-//                                Glide.with(this@Profile)
-//                                    .load(it)
-//                                    .into(binding.ImgProf)
-//                            }
-//
-//                            this@Profile.customer = customer // Menyimpan customer untuk penggunaan di update
-//                            break // Ambil satu customer saja
-//                        } else {
-//                            Log.e("Profile", "Customer data is null")
-//                        }
-//                    }
-//                } else {
-//                    Toast.makeText(this@Profile, "No customer data found", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Toast.makeText(this@Profile, "Database error: ${error.message}", Toast.LENGTH_SHORT).show()
-//            }
-//        })
     }
 
     override fun onClick(view: View?) {
@@ -147,10 +105,14 @@ class Profile : AppCompatActivity(), View.OnClickListener {
             R.id.btnUpdate -> {
                 // Mengupdate data customer
                 customer.nama = binding.txName.text.toString()
-                customer.no_telp = binding.txTelepon.text.toString()
-                val encryptedEmail =
-                    EncryptionUtils.encrypt(binding.txEmail.text.toString()) // Encrypt email before saving
-                customer.email = encryptedEmail
+
+                // Enkripsi nomor telepon sebelum disimpan
+                val encryptedPhone = EncryptionUtils.encrypt(binding.txTelepon.text.toString())
+                customer.no_telp = encryptedPhone
+
+                // Tidak perlu mengenkripsi email karena email tetap tidak terenkripsi
+                customer.email = binding.txEmail.text.toString()
+
                 customer.alamat = binding.txAlamatProf.text.toString()
 
                 // Pastikan nama tidak kosong
@@ -219,28 +181,25 @@ class Profile : AppCompatActivity(), View.OnClickListener {
         Log.d("Profile", "$userId")
 
         if (userId != null) {
+            // Get the name from the UI
             customer.nama = binding.txName.text.toString()
-            customer.no_telp = binding.txTelepon.text.toString()
 
-            // Encrypt the email before saving it
-            val encryptedEmail =
-                EncryptionUtils.encrypt(binding.txEmail.text.toString()) // Encrypt email before saving
-            customer.email = encryptedEmail // Store the encrypted email
+            // Encrypt the phone number before saving
+            val encryptedNoTelp = EncryptionUtils.encrypt(binding.txTelepon.text.toString())
+            customer.no_telp = encryptedNoTelp  // Save the encrypted phone number
 
+            // Save the other details (email, address) as they are
+            customer.email = binding.txEmail.text.toString()
             customer.alamat = binding.txAlamatProf.text.toString()
 
             // Save all customer data with UID as key in Firebase Database
             db.child(userId).setValue(customer)
-                .addOnSuccessListener {
+                .addOnCompleteListener {
                     Toast.makeText(this, "Data updated successfully", Toast.LENGTH_SHORT).show()
-                    finish() // Close the activity after data is updated
                 }
-                .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to update data: ${e.message}", Toast.LENGTH_SHORT)
-                        .show()
+                .addOnFailureListener {
+                    Toast.makeText(this, "Failed to update data", Toast.LENGTH_SHORT).show()
                 }
-        } else {
-            Toast.makeText(this, "User ID not found. Please log in.", Toast.LENGTH_SHORT).show()
         }
     }
 }

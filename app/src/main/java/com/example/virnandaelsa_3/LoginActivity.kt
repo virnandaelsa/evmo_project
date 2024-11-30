@@ -124,7 +124,7 @@ class LoginActivity : AppCompatActivity() {
                         putString("user_id", userId)
                         apply()
                     }
-                    Toast.makeText(this, "Login berhasil Firebase!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Login berhasil!", Toast.LENGTH_SHORT).show()
                     // Redirect ke halaman utama
                     val intent = Intent(this, DashboardActivity::class.java)
                     startActivity(intent)

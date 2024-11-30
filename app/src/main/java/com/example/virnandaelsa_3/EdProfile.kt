@@ -72,12 +72,11 @@ class EdProfile : Fragment(), View.OnClickListener {
                             Log.d("EdProfile", "Customer data: $customer")
                             binding.txNama1.setText(customer.nama ?: "N/A")
                             binding.txNama.setText(customer.nama ?: "N/A")
-                            binding.txNomor.setText(customer.no_telp ?: "N/A")
-                            val decryptedEmail = customer.email?.let {
-                                EncryptionUtils.decrypt(it)
+                            val decryptedPhone = customer.no_telp?.let {
+                                EncryptionUtils.decrypt(it) // Decrypt phone number
                             }
-
-                            binding.txGmail.setText(decryptedEmail ?: "N/A")
+                            binding.txNomor.setText(decryptedPhone ?: "N/A")
+                            binding.txGmail.setText(customer.email ?: "N/A")
                             binding.txAlamat1.setText(customer.alamat ?: "N/A")
 
                             // Set gambar jika ada URL

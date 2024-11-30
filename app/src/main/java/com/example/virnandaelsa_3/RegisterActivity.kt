@@ -71,7 +71,7 @@ class RegisterActivity : AppCompatActivity() {
             // Register to MySQL without encrypting email
             registerUserMySQL(nama, email, alamat, no_telp, username, password)
 
-            // Register to Firebase with encrypted email
+            // Register to Firebase with encrypted no_telp and plain email
             registerUserFirebase(nama, email, alamat, no_telp, username, password)
         }
     }
@@ -121,11 +121,11 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     fun registerUserFirebase(nama: String, email: String, alamat: String, no_telp: String, username: String, password: String) {
-        // Enkripsi email hanya untuk Firebase
-        val encryptedEmail = encrypt(email)  // Gunakan kunci yang kuat dan unik
+        // Enkripsi no_telp sebelum disimpan ke Firebase
+        val encryptedNoTelp = encrypt(no_telp)  // Gunakan kunci yang kuat dan unik
 
-        // Log the encrypted email for debugging
-        Log.d("EncryptedEmail", "Encrypted email: $encryptedEmail")
+        // Log the encrypted phone number for debugging
+        Log.d("EncryptedNoTelp", "Encrypted no_telp: $encryptedNoTelp")
 
         // Create user with Firebase Authentication
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
@@ -138,9 +138,9 @@ class RegisterActivity : AppCompatActivity() {
                     // Creating the user object
                     val user = hashMapOf(
                         "nama" to nama,
-                        "email" to encryptedEmail,  // Save the encrypted email here
+                        "email" to email,  // Save the plain email here
                         "alamat" to alamat,
-                        "no_telp" to no_telp,
+                        "no_telp" to encryptedNoTelp,  // Save the encrypted no_telp here
                         "username" to username
                     )
 
