@@ -5,40 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="79dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="316dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/wisma"
-        tools:srcCompat="@drawable/wisma" />
-
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="33dp"
-        android:text="Untuk Anda"
+        android:layout_marginTop="-10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Dari Kami Untuk Anda"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/listViewJasa"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
     <ListView
         android:id="@+id/listViewJasa"
-        android:layout_width="404dp"
-        android:layout_height="589dp"
+        android:layout_width="380dp"
+        android:layout_height="450dp"
         android:layout_margin="8dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
@@ -46,32 +35,67 @@
         android:id="@+id/frag_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/btnyt"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="17dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="76dp"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/yt"
-        app:layout_constraintBottom_toTopOf="@+id/listViewJasa"
         app:layout_constraintEnd_toStartOf="@+id/btnTt"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/btnTt"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="17dp"
         android:layout_marginEnd="20dp"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/tt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/titan_one"
+        android:text="Hallo,"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/titan_one"
+        android:text="Nama"
+        android:textSize="22sp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toEndOf="@+id/textView18"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="350dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnyt"
+        app:srcCompat="@drawable/group" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

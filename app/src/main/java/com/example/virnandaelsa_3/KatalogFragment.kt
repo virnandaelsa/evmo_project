@@ -10,12 +10,19 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.virnandaelsa_3.Models.KatalogResponse
 import com.example.virnandaelsa_3.databinding.ActivityKatalogFragmentBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class KatalogFragment : Fragment() {
     private lateinit var binding: ActivityKatalogFragmentBinding
+    private lateinit var customer: Customer
+    private lateinit var db: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +35,11 @@ class KatalogFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fetchKatalogData()
+        // Inisialisasi Firebase Database
+        db = FirebaseDatabase.getInstance().getReference("users")
 
+        // Load nama pelanggan
+        loadCustomerName()
         binding.btnyt.setOnClickListener {
             openWebView("https://www.youtube.com/")
             hideButtons()
@@ -38,6 +49,33 @@ class KatalogFragment : Fragment() {
             hideButtons()
         }
     }
+    private fun loadCustomerName() {
+        val sharedPref = requireActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        val userId = sharedPref.getString("user_id", null)
+
+        if (userId != null) {
+            db.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        // Menyimpan data pelanggan ke variabel customer
+                        customer = snapshot.getValue(Customer::class.java) ?: Customer()
+
+                        // Menampilkan nama pelanggan di TextView
+                        binding.tName.text = customer.nama ?: "Nama tidak ditemukan"
+                    } else {
+                        binding.tName.text = "Data tidak ditemukan"
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    binding.tName.text = "Error: ${error.message}"
+                }
+            })
+        } else {
+            binding.tName.text = "User ID tidak ditemukan"
+        }
+    }
+
 
     private fun hideButtons() {
         binding.btnyt.visibility = View.GONE
