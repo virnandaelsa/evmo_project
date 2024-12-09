@@ -9,14 +9,13 @@ import javax.crypto.spec.SecretKeySpec
 import javax.crypto.spec.IvParameterSpec
 
 object EncryptionUtils {
-    private const val SECRET_KEY = "1234567812345678" // This is a dummy example key, replace with a secure key
+    private const val SECRET_KEY = "1234567812345678"
 
     // Function to encrypt data
     fun encrypt(data: String): String {
         val key = SecretKeySpec(SECRET_KEY.toByteArray(), "AES")
 
-        // Generate a random IV (Initialization Vector)
-        val iv = ByteArray(16) // AES block size is 16 bytes
+        val iv = ByteArray(16)
         SecureRandom().nextBytes(iv)
         val ivParameterSpec = IvParameterSpec(iv)
 
@@ -26,10 +25,8 @@ object EncryptionUtils {
         // Encrypt the data
         val encryptedData = cipher.doFinal(data.toByteArray())
 
-        // Combine the IV and encrypted data (IV will be at the beginning)
         val ivAndEncryptedData = iv + encryptedData
 
-        // Encode combined data to Base64 for easy storage or transmission
         return Base64.encodeToString(ivAndEncryptedData, Base64.DEFAULT)
     }
 
@@ -40,7 +37,6 @@ object EncryptionUtils {
         // Decode the Base64-encoded data
         val ivAndEncryptedData = Base64.decode(data, Base64.DEFAULT)
 
-        // Extract the IV (first 16 bytes)
         val iv = ivAndEncryptedData.copyOfRange(0, 16)
         val encryptedData = ivAndEncryptedData.copyOfRange(16, ivAndEncryptedData.size)
 

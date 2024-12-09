@@ -121,8 +121,8 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     fun registerUserFirebase(nama: String, email: String, alamat: String, no_telp: String, username: String, password: String) {
-        // Enkripsi no_telp sebelum disimpan ke Firebase
-        val encryptedNoTelp = encrypt(no_telp)  // Gunakan kunci yang kuat dan unik
+
+        val encryptedNoTelp = encrypt(no_telp)
 
         // Log the encrypted phone number for debugging
         Log.d("EncryptedNoTelp", "Encrypted no_telp: $encryptedNoTelp")
@@ -138,9 +138,9 @@ class RegisterActivity : AppCompatActivity() {
                     // Creating the user object
                     val user = hashMapOf(
                         "nama" to nama,
-                        "email" to email,  // Save the plain email here
+                        "email" to email,
                         "alamat" to alamat,
-                        "no_telp" to encryptedNoTelp,  // Save the encrypted no_telp here
+                        "no_telp" to encryptedNoTelp,
                         "username" to username
                     )
 
@@ -157,7 +157,6 @@ class RegisterActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     }.addOnFailureListener { exception ->
-                        // Log the failure message
                         Log.e("FirebaseError", "Error saving user data: ${exception.message}")
                         Toast.makeText(this, "Registrasi Gagal", Toast.LENGTH_SHORT).show()
                     }
