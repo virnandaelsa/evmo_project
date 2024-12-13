@@ -41,7 +41,7 @@ class KatalogFragment : Fragment() {
         // Load nama pelanggan
         loadCustomerName()
         binding.btnyt.setOnClickListener {
-            openWebView("https://www.youtube.com/")
+            openWebView("https://youtu.be/JpntzaNvHKc?si=EYXx1E1AFeJL_rPv")
             hideButtons()
         }
         binding.btnTt.setOnClickListener {

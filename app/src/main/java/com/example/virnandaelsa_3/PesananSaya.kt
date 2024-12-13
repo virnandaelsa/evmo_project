@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.virnandaelsa_3.databinding.FragPesananBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class PesananSaya : Fragment() {
@@ -41,32 +42,45 @@ class PesananSaya : Fragment() {
     }
 
     private fun fetchTransaksiData() {
-        database.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                transaksiList.clear()
-                for (dataSnapshot in snapshot.children) {
-                    // Menggunakan key sebagai transactionId
-                    val transactionId = dataSnapshot.key ?: "" // Ambil key sebagai ID transaksi
-                    val judul = dataSnapshot.child("judul").getValue(String::class.java) ?: ""
-                    val harga = dataSnapshot.child("harga").getValue(Long::class.java) ?: 0L
-                    val toko = dataSnapshot.child("toko").getValue(String::class.java) ?: ""
-                    val imageUrl = dataSnapshot.child("imageUrl").getValue(String::class.java) ?: ""
-                    val keterangan = dataSnapshot.child("keterangan").getValue(String::class.java) ?: ""
-                    val tanggal = dataSnapshot.child("tanggal").getValue(String::class.java) ?: ""
-                    val alamat = dataSnapshot.child("alamat").getValue(String::class.java) ?: ""
-                    val dpImageUrl = dataSnapshot.child("dpUri").getValue(String::class.java) ?: "" // Ambil URL foto DP
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val username = currentUser?.displayName ?: currentUser?.email ?: "Unknown"  // Menggunakan email sebagai fallback
+        
+        // Pastikan username tidak kosong
+        if (username.isNotEmpty()) {
+            database.orderByChild("username") // Menyaring berdasarkan username
+                .equalTo(username) // Mencari transaksi dengan username yang sesuai
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        transaksiList.clear()
+                        if (snapshot.exists()) { // Jika ada data transaksi yang ditemukan
+                            for (dataSnapshot in snapshot.children) {
+                                val transactionId = dataSnapshot.key ?: ""
+                                val judul = dataSnapshot.child("judul").getValue(String::class.java) ?: ""
+                                val harga = dataSnapshot.child("harga").getValue(Long::class.java) ?: 0L
+                                val toko = dataSnapshot.child("toko").getValue(String::class.java) ?: ""
+                                val imageUrl = dataSnapshot.child("imageUrl").getValue(String::class.java) ?: ""
+                                val keterangan = dataSnapshot.child("keterangan").getValue(String::class.java) ?: ""
+                                val tanggal = dataSnapshot.child("tanggal").getValue(String::class.java) ?: ""
+                                val alamat = dataSnapshot.child("alamat").getValue(String::class.java) ?: ""
+                                val dpImageUrl = dataSnapshot.child("dpUri").getValue(String::class.java) ?: ""
 
-                    // Buat objek Transaksi dan tambahkan ke daftar
-                    val transaksi = Transaksi(transactionId, judul, harga, toko, imageUrl, keterangan, tanggal, alamat, dpImageUrl)
-                    transaksiList.add(transaksi)
-                }
-                listView.adapter = TransaksiAdapter(requireContext(), transaksiList)
-            }
+                                val transaksi = Transaksi(transactionId, judul, harga, toko, imageUrl, keterangan, tanggal, alamat, dpImageUrl)
+                                transaksiList.add(transaksi)
+                            }
+                            listView.adapter = TransaksiAdapter(requireContext(), transaksiList)
+                        } else {
+                            // Jika tidak ada transaksi ditemukan
+                            Toast.makeText(requireContext(), "Tidak ada transaksi untuk pengguna ini", Toast.LENGTH_SHORT).show()
+                        }
+                    }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(requireContext(), "Gagal mengambil data: ${error.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(requireContext(), "Gagal mengambil data: ${error.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
+        } else {
+            Toast.makeText(requireContext(), "Pengguna tidak terdaftar", Toast.LENGTH_SHORT).show()
+        }
     }
 
     // Adapter untuk menampilkan daftar transaksi

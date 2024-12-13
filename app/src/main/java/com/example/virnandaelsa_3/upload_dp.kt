@@ -47,8 +47,14 @@ class upload_dp : AppCompatActivity() {
 
         // Ambil data yang dikirim dari FirebaseMessage jika ada
         transactionId = intent.getStringExtra("transactionId")
-        productTitle = intent.getStringExtra("promo")
-        productPrice = intent.getStringExtra("promoUntil") // Ubah sesuai kebutuhan
+        if (transactionId.isNullOrEmpty()) {
+            Log.e("UploadDP", "Transaction ID is null or empty.")
+            Toast.makeText(this, "Transaction ID tidak valid.", Toast.LENGTH_SHORT).show()
+        } else {
+            Log.d("UploadDP", "Received valid transactionId: $transactionId")
+        }
+        productTitle = intent.getStringExtra("PRODUCT_TITLE")
+        productPrice = intent.getStringExtra("PRODUCT_PRICE") // Ubah sesuai kebutuhan
         productOwner = intent.getStringExtra("PRODUCT_OWNER") // Misalnya ambil dari notifikasi
         productImageUri = intent.getStringExtra("PRODUCT_IMAGE_URI")
         tanggal = intent.getStringExtra("TANGGAL")
@@ -57,7 +63,7 @@ class upload_dp : AppCompatActivity() {
 
         // Tampilkan data di layout
         binding.txProduk2.text = productTitle ?: "Tidak ada judul"
-        binding.txhargadp.text = productPrice ?: "Tidak ada harga"
+        binding.txhargadp.text = productPrice?.let { "$it" } ?: "Tidak ada harga"
         binding.txToko2.text = productOwner ?: "Tidak ada pemilik"
         binding.txTgl.text = tanggal ?: "Tidak ada tanggal"
         binding.txket.text = keterangan ?: "Tidak ada keterangan"
@@ -119,6 +125,7 @@ class upload_dp : AppCompatActivity() {
                 taskSnapshot.storage.downloadUrl.addOnSuccessListener { uri ->
                     // Gambar berhasil diunggah, dapatkan URL-nya
                     val dpUrl = uri.toString()
+                    Log.d("UploadDP", "DP uploaded successfully. URL: $dpUrl") // Log URL gambar yang diupload
 
                     // Simpan data DP ke transaksi yang sudah ada
                     val dpUpdate = mapOf(
@@ -127,6 +134,7 @@ class upload_dp : AppCompatActivity() {
 
                     // Perbarui transaksi yang sudah ada
                     if (transactionId != null) {
+                        Log.d("UploadDP", "Transaction ID is valid: $transactionId") // Log jika ID transaksi valid
                         database.child(transactionId).updateChildren(dpUpdate)
                             .addOnSuccessListener {
                                 Toast.makeText(this, "DP berhasil diunggah!", Toast.LENGTH_SHORT).show()
@@ -137,16 +145,19 @@ class upload_dp : AppCompatActivity() {
                                 finish()
                             }
                             .addOnFailureListener { e ->
+                                Log.e("UploadDP", "Failed to update transaction: ${e.message}") // Log error jika gagal memperbarui transaksi
                                 Toast.makeText(this, "Gagal memperbarui transaksi: ${e.message}", Toast.LENGTH_SHORT).show()
                                 progressDialog.dismiss()
                             }
                     } else {
+                        Log.e("UploadDP", "Transaction ID is null or invalid.") // Log error jika ID transaksi null
                         Toast.makeText(this, "Transaction ID tidak valid.", Toast.LENGTH_SHORT).show()
                         progressDialog.dismiss()
                     }
                 }
             }
             .addOnFailureListener { e ->
+                Log.e("UploadDP", "Failed to upload DP: ${e.message}")
                 Toast.makeText(this, "Gagal mengunggah DP: ${e.message}", Toast.LENGTH_SHORT).show()
                 progressDialog.dismiss()
             }

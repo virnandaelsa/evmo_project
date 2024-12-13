@@ -11,6 +11,10 @@ import com.bumptech.glide.Glide
 import com.example.virnandaelsa_3.databinding.FragPemesananBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import com.google.firebase.auth.FirebaseAuth
+import java.util.*
 
 class tambah_transaksi : AppCompatActivity() {
 
@@ -25,103 +29,143 @@ class tambah_transaksi : AppCompatActivity() {
         binding = FragPemesananBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Ambil data yang dikirim dari activity sebelumnya
-        val serviceId = intent.getStringExtra("SERVICE_ID")
-        val productTitle = intent.getStringExtra("PRODUCT_TITLE")
-        val productPrice = intent.getStringExtra("PRODUCT_PRICE")
-        val productOwner = intent.getStringExtra("PRODUCT_OWNER")
-        val productImageUri = intent.getStringExtra("PRODUCT_IMAGE_URI")
+        // Ambil data dari intent
 
-//        Log.d("Tambah Transaksi", "$productPrice")
+        val serviceId = intent.getStringExtra("SERVICE_ID") ?: ""
+        val productTitle = intent.getStringExtra("PRODUCT_TITLE") ?: "Produk Tidak Diketahui"
+        val productPrice = intent.getStringExtra("PRODUCT_PRICE") ?: "0"
+        val productOwner = intent.getStringExtra("PRODUCT_OWNER") ?: "Toko Tidak Diketahui"
+        val productImageUri = intent.getStringExtra("PRODUCT_IMAGE_URI") ?: ""
 
-        // Tampilkan data di layout menggunakan binding
+        // Tampilkan data di layout
         binding.txProduk4.text = productTitle
-        binding.txHarga4.text = "$productPrice"
+        binding.txHarga4.text = productPrice
         binding.txToko4.text = productOwner
 
-        // Tampilkan gambar produk menggunakan Glide jika ada
-        if (productImageUri != null) {
-            Glide.with(this)
-                .load(productImageUri)
-                .into(binding.imgProduk4)
+        // Tampilkan gambar produk menggunakan Glide
+        Glide.with(this)
+            .load(productImageUri)
+            .into(binding.imgProduk4)
+
+        // Pilih tanggal dan waktu
+        binding.edTanggalInput.setOnClickListener {
+            showDateTimePickerDialog()
         }
 
-        // Tombol untuk menyimpan data transaksi
+        // Tombol untuk menyimpan transaksi
         binding.btnPesanan.setOnClickListener {
             val tanggal = binding.edTanggalInput.text.toString()
             val keterangan = binding.edKeteranganInput.text.toString()
             val alamat = binding.edAlamatInput.text.toString()
+            val productPriceInt = productPrice.replace("[^\\d]".toRegex(), "").toIntOrNull() ?: 0
 
-            // Convert price from String to Int
-            val productPriceInt = productPrice?.toIntOrNull() // Safely convert to Int
+            // Validasi input sebelum menyimpan transaksi
+            if (tanggal.isEmpty() || keterangan.isEmpty() || alamat.isEmpty()) {
+                Toast.makeText(this, "Harap isi semua kolom!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-            // Simpan transaksi
             simpanTransaksi(
                 serviceId,
                 productTitle,
                 productPriceInt,
                 productOwner,
-                productImageUri, // Menggunakan imageUrl dari Firebase
+                productImageUri,
                 tanggal,
                 keterangan,
                 alamat
             )
         }
-
-        // TextInput untuk tanggal dan keterangan
-        binding.edTanggalInput.addTextChangedListener { }
-        binding.edKeteranganInput.addTextChangedListener { }
-        binding.edAlamatInput.addTextChangedListener { }
     }
 
-    // Fungsi untuk menyimpan transaksi ke Firebase
+    private fun showDateTimePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
+            val selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+
+            // Setelah tanggal dipilih, munculkan TimePickerDialog
+            TimePickerDialog(this, { _, selectedHour, selectedMinute ->
+                val formattedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
+                val selectedDateTime = "$selectedDate $formattedTime"
+
+                binding.edTanggalInput.setText(selectedDateTime)
+            }, hour, minute, true).show()
+
+        }, year, month, day).show()
+    }
+
     private fun simpanTransaksi(
         serviceId: String?,
         productTitle: String?,
-        productPrice: Int?,
+        productPrice: Int,
         productOwner: String?,
-        imageUrl: String?, // Menggunakan imageUrl yang diterima dari intent
+        imageUrl: String?,
         tanggal: String?,
         keterangan: String?,
         alamat: String?
     ) {
-        // Membuat map untuk transaksi
+        // Log data transaksi sebelum disimpan
+        Log.d("TambahTransaksi", "Menyimpan transaksi dengan data: \n" +
+                "serviceId: $serviceId\n" +
+                "productTitle: $productTitle\n" +
+                "productPrice: $productPrice\n" +
+                "productOwner: $productOwner\n" +
+                "imageUrl: $imageUrl\n" +
+                "tanggal: $tanggal\n" +
+                "keterangan: $keterangan\n" +
+                "alamat: $alamat")
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val username = currentUser?.displayName ?: currentUser?.email ?: "Unknown"  // Use email as fallback
+
         val transaksi = mapOf(
             "id" to serviceId,
             "judul" to productTitle,
             "harga" to productPrice,
             "toko" to productOwner,
-            "imageUrl" to (imageUrl ?: ""), // Jika `dpUri` kosong, berikan nilai default
+            "imageUrl" to (imageUrl ?: ""),
             "tanggal" to tanggal,
             "keterangan" to keterangan,
-            "alamat" to alamat
+            "alamat" to alamat,
+            "username" to username
         )
 
-        // Insert to Firebase
         database = FirebaseDatabase.getInstance().getReference("Transaksi")
-        val newTransactionRef = database.push() // Buat referensi baru
+        val newTransactionRef = database.push()
+
         newTransactionRef.setValue(transaksi)
             .addOnSuccessListener {
-                // Ambil transaction ID yang baru dibuat
                 val transactionId = newTransactionRef.key
+                // Log ketika transaksi berhasil disimpan
+                Log.d("TambahTransaksi", "Transaksi berhasil disimpan dengan ID: $transactionId")
 
                 Toast.makeText(this, "Transaksi berhasil disimpan!", Toast.LENGTH_SHORT).show()
 
-                // Navigasi ke upload_dp setelah menyimpan transaksi
                 val intent = Intent(this, upload_dp::class.java).apply {
+                    putExtra("transactionId", transactionId)
                     putExtra("SERVICE_ID", serviceId)
                     putExtra("PRODUCT_TITLE", productTitle)
                     putExtra("PRODUCT_PRICE", productPrice.toString())
                     putExtra("PRODUCT_OWNER", productOwner)
-                    putExtra("PRODUCT_IMAGE_URI", imageUrl) // Kirim dpUri ke upload_dp
+                    putExtra("PRODUCT_IMAGE_URI", imageUrl)
                     putExtra("TANGGAL", tanggal)
                     putExtra("KETERANGAN", keterangan)
                     putExtra("ALAMAT", alamat)
-                    putExtra("TRANSACTION_ID", transactionId) // Kirim transactionId ke upload_dp
                 }
+
+                // Log pengiriman data ke aktivitas berikutnya
+                Log.d("TambahTransaksi", "Mengirimkan intent ke aktivitas upload_dp dengan transactionId: $transactionId")
+
                 startActivity(intent)
             }
             .addOnFailureListener { e ->
+                Log.e("FirebaseError", "Gagal menyimpan transaksi", e)
                 Toast.makeText(this, "Gagal menyimpan transaksi: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }

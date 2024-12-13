@@ -182,7 +182,8 @@
                 android:id="@+id/edTanggalInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tanggal / Jam" />
+                android:hint="Tanggal / Jam"
+                android:focusable="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

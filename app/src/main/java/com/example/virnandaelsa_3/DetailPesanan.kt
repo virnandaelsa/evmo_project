@@ -45,7 +45,7 @@ class DetailPesanan : AppCompatActivity() {
                     binding.txToko3.text = toko
                     binding.txKet3.text = keterangan
                     binding.txTanggal3.text = tanggal
-                     binding.txAlamat3.text = alamat
+                    binding.txAlamat3.text = alamat
 
                     // Muat gambar produk
                     Glide.with(this@DetailPesanan)

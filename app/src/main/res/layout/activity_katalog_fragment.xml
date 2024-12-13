@@ -39,7 +39,7 @@
 
     <ImageView
         android:id="@+id/btnyt"
-        android:layout_width="30dp"
+        android:layout_width="46dp"
         android:layout_height="30dp"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="10dp"
@@ -51,8 +51,8 @@
 
     <ImageView
         android:id="@+id/btnTt"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="46dp"
+        android:layout_height="31dp"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="20dp"
         android:clickable="true"

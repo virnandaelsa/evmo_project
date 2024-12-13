@@ -62,7 +62,7 @@
         android:backgroundTint="#385A7F"
         android:textColor="#FFFFFF"
         app:cornerRadius="5dp"
-        app:icon="@android:drawable/ic_menu_send"
+        app:icon="@android:drawable/ic_menu_info_details"
         app:iconTint="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/buttonMaps"
         app:layout_constraintTop_toTopOf="parent" />
