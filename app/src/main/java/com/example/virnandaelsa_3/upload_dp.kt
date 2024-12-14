@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -16,7 +17,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.util.*
 
-class upload_dp : AppCompatActivity() {
+class upload_dp : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: FragDpBinding
     private lateinit var storageRef: StorageReference
@@ -40,6 +41,8 @@ class upload_dp : AppCompatActivity() {
         // Menggunakan View Binding
         binding = FragDpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnBKUpDP.setOnClickListener(this)
 
         // Inisialisasi Firebase Storage dan Realtime Database
         storageRef = FirebaseStorage.getInstance().reference
@@ -88,6 +91,15 @@ class upload_dp : AppCompatActivity() {
                 uploadDpToFirebase(selectedImageUri!!, transactionId) // Kirim transactionId ke fungsi upload
             } else {
                 Toast.makeText(this, "Silakan pilih gambar DP terlebih dahulu.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.btnBKUpDP-> {
+                // Kembali ke DashboardActivity
+                finish() // Menutup Profile dan kembali ke Dashboard
             }
         }
     }

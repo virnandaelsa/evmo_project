@@ -3,14 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/blue"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-4dp" />
 
     <ImageView
         android:id="@+id/gambar_dtktlg"
-        android:layout_width="160dp"
-        android:layout_height="115dp"
+        android:layout_width="180dp"
+        android:layout_height="125dp"
         android:layout_marginStart="125dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="175dp"
         android:layout_marginEnd="126dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,9 +31,11 @@
         android:id="@+id/judul_dtktlg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="235dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="330dp"
         android:text="Judul"
+        android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,41 +43,89 @@
         android:id="@+id/harga_dtktlg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="22dp"
-        android:text="Harga"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="113dp"
+        android:text="Rp. 5.000.000,00"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/judul_dtktlg" />
+        app:layout_constraintTop_toBottomOf="@+id/gambar_dtktlg" />
 
     <TextView
         android:id="@+id/toko_dtktlg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="29dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
         android:text="Toko"
+        android:textColor="#555555"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/deskripsi_dtktlg" />
+        app:layout_constraintTop_toBottomOf="@+id/judul_dtktlg" />
 
     <TextView
         android:id="@+id/deskripsi_dtktlg"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:text="Deskripsi Barang"
+        android:textColor="#666666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+
+    <Button
+        android:id="@+id/btn_pesan"
+        android:layout_width="280dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginEnd="100dp"
+        android:backgroundTint="#28A745"
+        android:text="PESAN"
+        android:textStyle="bold"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gambar_dtktlg" />
+
+    <TextView
+        android:id="@+id/textView28"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Harga :"
+        android:textColor="#5C5C5C"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toko_dtktlg" />
+
+    <TextView
+        android:id="@+id/textView30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
         android:text="Deskripsi"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/harga_dtktlg" />
 
     <Button
-        android:id="@+id/btn_pesan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="159dp"
-        android:layout_marginTop="389dp"
-        android:layout_marginEnd="164dp"
-        android:text="Pesan"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gambar_dtktlg" />
+        android:id="@+id/btnDtKatalog"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@null"
+        android:backgroundTint="#85A7CC"
+        android:gravity="center|start"
+        app:icon="@drawable/back"
+        app:iconGravity="textStart"
+        app:iconSize="25sp"
+        app:iconTint="#000000"
+        tools:layout_editor_absoluteX="-4dp"
+        tools:layout_editor_absoluteY="-3dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

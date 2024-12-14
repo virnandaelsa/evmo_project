@@ -222,15 +222,19 @@
                 android:hint="Alamat" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="18dp"
+        <Button
+            android:id="@+id/btnBKPemesanan"
+            android:layout_width="60dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="-5dp"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            android:backgroundTint="@android:color/transparent"
+            app:icon="@drawable/back"
+            app:iconSize="35dp"
+            app:iconTint="#385A7E"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/back" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

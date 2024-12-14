@@ -38,7 +38,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5"
+        app:layout_constraintTop_toBottomOf="@+id/btnDetailpesanan"
         app:srcCompat="@color/design_default_color_primary"
         tools:src="@color/design_default_color_primary"
         tools:srcCompat="@color/design_default_color_primary" />
@@ -240,7 +240,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView53" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btnDetailpesanan"
         android:layout_width="70dp"
         android:layout_height="30dp"
         android:layout_marginStart="-15dp"

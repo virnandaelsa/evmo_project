@@ -158,7 +158,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout8" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/btnCancel"
         android:layout_width="260dp"
         android:layout_height="50dp"
         android:layout_marginStart="50dp"

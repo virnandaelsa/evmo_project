@@ -74,6 +74,13 @@ class RegisterActivity : AppCompatActivity() {
             // Register to Firebase with encrypted no_telp and plain email
             registerUserFirebase(nama, email, alamat, no_telp, username, password)
         }
+
+        // Tombol Cancel untuk kembali ke LoginActivity
+        binding.btnCancel.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish() // Menutup Activity saat ini agar tidak dapat kembali dengan tombol Back
+        }
     }
 
     fun registerUserMySQL(nama: String, email: String, alamat: String, no_telp: String, username: String, password: String) {

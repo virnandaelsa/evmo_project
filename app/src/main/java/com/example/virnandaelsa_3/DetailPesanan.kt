@@ -1,13 +1,14 @@
 package com.example.virnandaelsa_3
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.virnandaelsa_3.databinding.FragDtpesananBinding
 import com.google.firebase.database.*
 
-class DetailPesanan : AppCompatActivity() {
+class DetailPesanan : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: FragDtpesananBinding
     private lateinit var database: DatabaseReference
@@ -17,6 +18,8 @@ class DetailPesanan : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = FragDtpesananBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnDetailpesanan.setOnClickListener(this)
 
         // Mendapatkan ID transaksi dari intent
         transactionId = intent.getStringExtra("TRANSACTION_ID") ?: ""
@@ -69,5 +72,13 @@ class DetailPesanan : AppCompatActivity() {
                 Toast.makeText(this@DetailPesanan, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.btnDetailpesanan-> {
+                // Kembali ke DashboardActivity
+                finish() // Menutup Profile dan kembali ke Dashboard
+            }
+        }
     }
 }

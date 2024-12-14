@@ -2,11 +2,12 @@ package com.example.virnandaelsa_3
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.virnandaelsa_3.databinding.FragDtkatalogBinding
 
-class DetailKatalog: AppCompatActivity() {
+class DetailKatalog: AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: FragDtkatalogBinding
 
@@ -14,6 +15,8 @@ class DetailKatalog: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = FragDtkatalogBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnDtKatalog.setOnClickListener(this)
 
         // Ambil data dari Intent
         val serviceId = intent.getStringExtra("SERVICE_ID") ?: ""
@@ -50,6 +53,14 @@ class DetailKatalog: AppCompatActivity() {
 
             }
             startActivity(intent)
+        }
+    }
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.btnDtKatalog-> {
+                // Kembali ke DashboardActivity
+                finish() // Menutup Profile dan kembali ke Dashboard
+            }
         }
     }
 }

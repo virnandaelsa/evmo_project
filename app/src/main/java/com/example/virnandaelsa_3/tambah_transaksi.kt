@@ -13,10 +13,11 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 
-class tambah_transaksi : AppCompatActivity() {
+class tambah_transaksi : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var database: DatabaseReference
     private var selectedImageUri: Uri? = null // Inisialisasi sebagai nullable
@@ -28,6 +29,8 @@ class tambah_transaksi : AppCompatActivity() {
         // Menggunakan View Binding
         binding = FragPemesananBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnBKPemesanan.setOnClickListener(this)
 
         // Ambil data dari intent
 
@@ -168,5 +171,13 @@ class tambah_transaksi : AppCompatActivity() {
                 Log.e("FirebaseError", "Gagal menyimpan transaksi", e)
                 Toast.makeText(this, "Gagal menyimpan transaksi: ${e.message}", Toast.LENGTH_SHORT).show()
             }
+    }
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.btnBKPemesanan-> {
+                // Kembali ke DashboardActivity
+                finish() // Menutup Profile dan kembali ke Dashboard
+            }
+        }
     }
 }
