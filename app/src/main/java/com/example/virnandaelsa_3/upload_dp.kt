@@ -1,22 +1,36 @@
 package com.example.virnandaelsa_3
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.virnandaelsa_3.databinding.FragDpBinding
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.util.*
 
+@RequiresApi(Build.VERSION_CODES.O)
 class upload_dp : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: FragDpBinding
@@ -34,6 +48,13 @@ class upload_dp : AppCompatActivity(), View.OnClickListener {
     private var tanggal: String? = null
     private var keterangan: String? = null
     private var alamat: String? = null
+
+    // Messaging
+
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    private val notificationManager: NotificationManager by lazy {
+        getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,8 +78,8 @@ class upload_dp : AppCompatActivity(), View.OnClickListener {
             Log.d("UploadDP", "Received valid transactionId: $transactionId")
         }
         productTitle = intent.getStringExtra("PRODUCT_TITLE")
-        productPrice = intent.getStringExtra("PRODUCT_PRICE") // Ubah sesuai kebutuhan
-        productOwner = intent.getStringExtra("PRODUCT_OWNER") // Misalnya ambil dari notifikasi
+        productPrice = intent.getStringExtra("PRODUCT_PRICE")
+        productOwner = intent.getStringExtra("PRODUCT_OWNER")
         productImageUri = intent.getStringExtra("PRODUCT_IMAGE_URI")
         tanggal = intent.getStringExtra("TANGGAL")
         keterangan = intent.getStringExtra("KETERANGAN")
@@ -87,17 +108,50 @@ class upload_dp : AppCompatActivity(), View.OnClickListener {
 
         // Tombol untuk mengunggah DP
         binding.btnKirim.setOnClickListener {
-            if (selectedImageUri != null) {
-                uploadDpToFirebase(selectedImageUri!!, transactionId) // Kirim transactionId ke fungsi upload
+            // Cek izin notifikasi
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.POST_NOTIFICATIONS,
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                // Periksa apakah gambar DP sudah dipilih
+                if (selectedImageUri != null) {
+                    uploadDpToFirebase(selectedImageUri!!, transactionId) {
+                        startNotification()
+                    }
+                } else {
+                    Toast.makeText(this, "Silakan pilih gambar DP terlebih dahulu.", Toast.LENGTH_SHORT).show()
+                }
             } else {
-                Toast.makeText(this, "Silakan pilih gambar DP terlebih dahulu.", Toast.LENGTH_SHORT).show()
+                // Jika izin notifikasi belum diberikan, minta izin
+                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
             }
         }
+
+
+        requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                startNotification()
+            } else {
+                Snackbar.make(
+                    findViewById<View>(android.R.id.content).rootView,
+                    "Please grant Notification permission from App Settings",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        }
+        createNotificationChannel()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel()
+        }
+
+        createToken()
     }
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.btnBKUpDP-> {
+            R.id.btnBKUpDP -> {
                 // Kembali ke DashboardActivity
                 finish() // Menutup Profile dan kembali ke Dashboard
             }
@@ -120,8 +174,14 @@ class upload_dp : AppCompatActivity(), View.OnClickListener {
     // Fungsi untuk mengunggah DP ke Firebase Storage
     private fun uploadDpToFirebase(
         imageUri: Uri,
-        transactionId: String? // Terima transactionId untuk memperbarui data
+        transactionId: String?,
+        onSuccess: () -> Unit // Terima transactionId untuk memperbarui data
     ) {
+        // Periksa jika gambar DP kosong
+        if (imageUri == null) {
+            Toast.makeText(this, "Gambar DP kosong, upload dibatalkan.", Toast.LENGTH_SHORT).show()
+            return // Membatalkan upload dan tidak lanjutkan ke proses berikutnya
+        }
         // Tampilkan progress dialog
         progressDialog = ProgressDialog(this)
         progressDialog.setMessage("Mengunggah DP...")
@@ -137,7 +197,7 @@ class upload_dp : AppCompatActivity(), View.OnClickListener {
                 taskSnapshot.storage.downloadUrl.addOnSuccessListener { uri ->
                     // Gambar berhasil diunggah, dapatkan URL-nya
                     val dpUrl = uri.toString()
-                    Log.d("UploadDP", "DP uploaded successfully. URL: $dpUrl") // Log URL gambar yang diupload
+                    Log.d("UploadDP", "DP uploaded successfully. URL: $dpUrl")
 
                     // Simpan data DP ke transaksi yang sudah ada
                     val dpUpdate = mapOf(
@@ -146,23 +206,25 @@ class upload_dp : AppCompatActivity(), View.OnClickListener {
 
                     // Perbarui transaksi yang sudah ada
                     if (transactionId != null) {
-                        Log.d("UploadDP", "Transaction ID is valid: $transactionId") // Log jika ID transaksi valid
+                        Log.d("UploadDP", "Transaction ID is valid: $transactionId")
                         database.child(transactionId).updateChildren(dpUpdate)
                             .addOnSuccessListener {
                                 Toast.makeText(this, "DP berhasil diunggah!", Toast.LENGTH_SHORT).show()
                                 progressDialog.dismiss()
+
+                                onSuccess()
 
                                 // Navigasi ke aktivitas lain jika perlu
                                 startActivity(Intent(this, DashboardActivity::class.java))
                                 finish()
                             }
                             .addOnFailureListener { e ->
-                                Log.e("UploadDP", "Failed to update transaction: ${e.message}") // Log error jika gagal memperbarui transaksi
+                                Log.e("UploadDP", "Failed to update transaction: ${e.message}")
                                 Toast.makeText(this, "Gagal memperbarui transaksi: ${e.message}", Toast.LENGTH_SHORT).show()
                                 progressDialog.dismiss()
                             }
                     } else {
-                        Log.e("UploadDP", "Transaction ID is null or invalid.") // Log error jika ID transaksi null
+                        Log.e("UploadDP", "Transaction ID is null or invalid.")
                         Toast.makeText(this, "Transaction ID tidak valid.", Toast.LENGTH_SHORT).show()
                         progressDialog.dismiss()
                     }
@@ -177,5 +239,40 @@ class upload_dp : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         private const val PICK_IMAGE_REQUEST = 1
+        const val CHANNEL_ID = "dummy_channel"
+    }
+
+    private fun createToken() {
+        val TAG = "FCM__TOKEN"
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful){
+                Log.e(TAG, "FCM token failed", task.exception)
+                return@OnCompleteListener
+            }
+            val token = task.result
+            Log.d(TAG, token)
+        })
+    }
+
+    private fun startNotification() {
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.wisma)
+            .setContentTitle("Pesanan Telah Berhasil \uD83C\uDF89")
+            .setContentText("Terima kasih telah melakukan pemesanan. \nSemoga harimu menyenangkan!!")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+        val notificationManager =
+            applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(1, builder.build())
+    }
+
+    private fun createNotificationChannel() {
+        val channel = NotificationChannel(
+            CHANNEL_ID,
+            "Important Notification Channel",
+            NotificationManager.IMPORTANCE_HIGH,
+        ).apply {
+            description = "This notification contains important announcement, etc."
+        }
+        notificationManager.createNotificationChannel(channel)
     }
 }

@@ -17,7 +17,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/listViewJasa"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+        app:layout_constraintTop_toBottomOf="@+id/ImgSlide" />
 
     <ListView
         android:id="@+id/listViewJasa"
@@ -35,7 +35,7 @@
         android:id="@+id/frag_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <ImageView
         android:id="@+id/btnyt"
@@ -87,7 +87,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/ImgSlide"
         android:layout_width="350dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"

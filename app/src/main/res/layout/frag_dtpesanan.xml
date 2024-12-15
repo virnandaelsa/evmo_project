@@ -45,8 +45,8 @@
 
     <TextView
         android:id="@+id/txProduk3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="170dp"
+        android:layout_height="30dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="28dp"
         android:text="Siger Sunda"

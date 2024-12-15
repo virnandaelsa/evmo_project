@@ -41,13 +41,18 @@ class KatalogFragment : Fragment() {
         // Load nama pelanggan
         loadCustomerName()
         binding.btnyt.setOnClickListener {
-            openWebView("https://youtu.be/JpntzaNvHKc?si=EYXx1E1AFeJL_rPv")
+            openWebView("https://www.youtube.com/watch?v=JpntzaNvHKc")
             hideButtons()
         }
         binding.btnTt.setOnClickListener {
             openWebView("https://www.tiktok.com/")
             hideButtons()
         }
+
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        parentFragmentManager.popBackStack()
     }
     private fun loadCustomerName() {
         val sharedPref = requireActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
@@ -78,12 +83,18 @@ class KatalogFragment : Fragment() {
 
 
     private fun hideButtons() {
+        binding.tName.visibility = View.GONE
+        binding.textView18.visibility = View.GONE
+        binding.ImgSlide.visibility = View.GONE
         binding.btnyt.visibility = View.GONE
         binding.btnTt.visibility = View.GONE
     }
 
     override fun onResume() {
         super.onResume()
+        binding.tName.visibility = View.VISIBLE
+        binding.textView18.visibility = View.VISIBLE
+        binding.ImgSlide.visibility = View.VISIBLE
         binding.btnyt.visibility = View.VISIBLE
         binding.btnTt.visibility = View.VISIBLE
     }
@@ -91,7 +102,9 @@ class KatalogFragment : Fragment() {
     private fun openWebView(url: String) {
         val webViewFragment = FragmentWebView()
         val bundle = Bundle()
-        bundle.putString("url", url)
+
+        val sanitizedUrl = url.split("?")[0]
+        bundle.putString("url", sanitizedUrl)
         webViewFragment.arguments = bundle
 
         parentFragmentManager.beginTransaction()
